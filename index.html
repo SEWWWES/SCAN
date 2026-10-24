@@ -568,7 +568,7 @@ var qrcodegen = new function() {
   ========================================================================
 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>©️ ScanMe.NFT Minter Satellit v1.3.360 SUPREME | ©️ NET.SeWWWeS.NET</title>
+<title>©️ ScanMe.NFT Minter Satellit v1.0.10 SUPREME (WALLETLING & AUTO SCANNER) | ©️ NET.SeWWWeS.NET</title>
 <style>
 :root {
   --bg-dark: #0A0E17;
@@ -1541,12 +1541,12 @@ window.isBdrScanLoopActive = false;
 window.lastScannedQrValue = "";
 window.lastScannedQrTime = 0;
 
+/* Pure-JS + Native Multi-Engine QR Scanner Loop */
 window.startLiveCameraScanLoop = function() {
   if (window.isBdrScanLoopActive) return;
   window.isBdrScanLoopActive = true;
-  if (typeof sysLog === "function") sysLog("⚡ Starte kontinuierliche Kamera-Abtastung (Canvas & Native Loop)...");
+  if (typeof sysLog === "function") sysLog("⚡ Starte kontinuierliche Kamera-Abtastung (Multi-Engine: Native + Canvas QR)...");
 
-  // Create hidden canvas if not exists
   let canvas = document.getElementById("bdr-hidden-scan-canvas");
   if (!canvas) {
     canvas = document.createElement("canvas");
@@ -1560,7 +1560,8 @@ window.startLiveCameraScanLoop = function() {
 
     const video = document.getElementById("scanme-bdr-video-stream");
     if (video && video.readyState === video.HAVE_ENOUGH_DATA && window.currentBdrScanMode === "qr") {
-      // 1. Try Native BarcodeDetector API if available
+      
+      // ENGINE 1: Native BarcodeDetector API if available
       if ("BarcodeDetector" in window) {
         try {
           if (!window.globalBarcodeDetector) {
@@ -1572,7 +1573,7 @@ window.startLiveCameraScanLoop = function() {
               if (val && (val !== window.lastScannedQrValue || (Date.now() - window.lastScannedQrTime > 3000))) {
                 window.lastScannedQrValue = val;
                 window.lastScannedQrTime = Date.now();
-                if (typeof sysLog === "function") sysLog("🎯 QR-Code via BarcodeDetector erkannt: " + val);
+                if (typeof sysLog === "function") sysLog("🎯 QR-Code via Native BarcodeDetector erkannt: " + val);
                 processScanMeBdrScan(val);
               }
             }
@@ -1580,15 +1581,28 @@ window.startLiveCameraScanLoop = function() {
         } catch(e) {}
       }
 
-      // 2. Canvas Pattern Extraction Fallback
+      // ENGINE 2: Canvas Pattern Extraction & Decoder Fallback
       try {
         const w = video.videoWidth || 320;
         const h = video.videoHeight || 240;
-        canvas.width = Math.min(w, 400);
-        canvas.height = Math.min(h, 300);
+        canvas.width = Math.min(w, 480);
+        canvas.height = Math.min(h, 360);
         const ctx = canvas.getContext("2d");
         if (ctx) {
           ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+          const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          if (typeof jsQR !== "undefined") {
+            const code = jsQR(imgData.data, imgData.width, imgData.height, { inversionAttempts: "dontInvert" });
+            if (code && code.data && code.data.trim() !== "") {
+              const val = code.data.trim();
+              if (val && (val !== window.lastScannedQrValue || (Date.now() - window.lastScannedQrTime > 3000))) {
+                window.lastScannedQrValue = val;
+                window.lastScannedQrTime = Date.now();
+                if (typeof sysLog === "function") sysLog("🎯 QR-Code via Pure-JS Engine erkannt: " + val);
+                processScanMeBdrScan(val);
+              }
+            }
+          }
         }
       } catch(e) {}
     }
@@ -1600,6 +1614,7 @@ window.startLiveCameraScanLoop = function() {
 
   scanFrame();
 };
+
 
 window.stopLiveCameraScanLoop = function() {
   window.isBdrScanLoopActive = false;
@@ -3247,7 +3262,7 @@ function updateWalletUI(addr, logLabel) {
     }
 
     async function init() {
-      sysLog("Satellit v1.3.360 SUPREME (AUTO PRE-FILL SCHRITT 4/4 & MINT) initialisiert...");
+      sysLog("Satellit v1.0.10 SUPREME (WALLETLING & AUTO SCANNER) (AUTO PRE-FILL SCHRITT 4/4 & MINT) initialisiert...");
       startPrerequisitesPolling();
       updateRwaCalculation();
       
