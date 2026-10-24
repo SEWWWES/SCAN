@@ -4777,3 +4777,33 @@ window.addEventListener("DOMContentLoaded", function() {
 
 </body>
 </html>
+window.executeSpclOmniboxSearch = function(query) {
+  if (!query || query.trim() === '') return;
+  const q = query.trim();
+  if (typeof sysLog === 'function') sysLog('SPCL Query: ' + q);
+
+  if (q.startsWith('0x') || /^\d{10}$/.test(q) || q.includes('.')) {
+    processScanMeBdrScan(q);
+    return;
+  }
+
+  const banner = document.getElementById('bdr-qr-result-banner');
+  const header = document.getElementById('bdr-qr-status-header');
+  const decoded = document.getElementById('bdr-qr-decoded-content');
+  const btnExt = document.getElementById('btn-qr-open-external');
+
+  if (banner) banner.style.display = 'block';
+  if (decoded) decoded.innerText = 'SEARCH QUERY: ' + q;
+
+  const isInternal = /sewwwes|smartearth|rwa|minter|call|scan|bdr|znq|zeniq|www|depin|aix1|spcl/i.test(q);
+
+  if (isInternal) {
+    if (header) header.innerHTML = '<span style="color:#00FF66; font-weight:950;">🟢 STUFE 1: SPCL NETZWERK-SUCHTREFFER</span>';
+    window.scannedTargetGlobalUrl = 'https://sewwwes.net';
+    if (btnExt) btnExt.innerText = '🚀 VERIFIZIERTES ERGEBNIS ÖFFNEN';
+  } else {
+    if (header) header.innerHTML = '<span style="color:#FFD700; font-weight:950;">🟡 STUFE 2: EXTERNE DEZENTRALE SUCHE (UNVERIFIZIERT)</span>';
+    window.scannedTargetGlobalUrl = 'https://sewwwes.net';
+    if (btnExt) btnExt.innerText = '🔗 EXTERNE DEZENTRALE SUCHE ÖFFNEN';
+  }
+};
