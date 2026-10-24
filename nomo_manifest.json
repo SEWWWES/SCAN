@@ -33,5 +33,6 @@
     "nomo.permission.SWITCH_CHAIN",
     "nomo.permission.ADD_CHAIN",
     "nomo.permission.REGISTER_CARD"
-  ]
+  ],
+  "version": "1.0.9"
 }
