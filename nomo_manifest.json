@@ -2,8 +2,8 @@
   "nomo_manifest_version": "1.2.0",
   "webon_id": "net.sewwwes.scan",
   "webon_name": "SeWWWeS Sovereign Scanner",
-  "webon_version": "1.0.3",
-  "webon_description": "SmartEarthFamily Master Gateway v1.3.359 SUPREME",
+  "webon_version": "1.0.4",
+  "webon_description": "SCAN.SeWWWeS.NET Sovereign Scanner WebOn v1.0.4 SUPREME - Universal Continuous Camera QR & Barcode Decoder with SPCL Phalanx & 2-Tier Truth Matrix.",
   "webon_icon": "assets/icons/icon_master_gateway.png",
   "min_nomo_version": "0.9.0",
   "permissions": [

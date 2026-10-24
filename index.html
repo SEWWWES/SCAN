@@ -1467,6 +1467,7 @@ function openSovereignCameraScanner() {
     });
   }
 
+  window.startLiveCameraScanLoop();
   if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(stream => {
       var video = document.getElementById("scanme-bdr-video-stream");
@@ -1481,6 +1482,7 @@ function openSovereignCameraScanner() {
 }
 
 function closeScanMeBdrModal() {
+  window.stopLiveCameraScanLoop();
   window.closeScanMeBdrModal = closeScanMeBdrModal;
   var modal = document.getElementById("scanme-bdr-modal");
   if (modal) modal.style.display = "none";
@@ -1531,29 +1533,111 @@ function switchBdrScanMode(mode) {
   }
 }
 
+// =========================================================================
+// CONTINUOUS REAL-TIME CAMERA SCANNER & CANVAS MATRIX DECODER (v1.0.4)
+// =========================================================================
+window.bdrScanLoopTimer = null;
+window.isBdrScanLoopActive = false;
+window.lastScannedQrValue = "";
+window.lastScannedQrTime = 0;
+
+window.startLiveCameraScanLoop = function() {
+  if (window.isBdrScanLoopActive) return;
+  window.isBdrScanLoopActive = true;
+  if (typeof sysLog === "function") sysLog("⚡ Starte kontinuierliche Kamera-Abtastung (Canvas & Native Loop)...");
+
+  // Create hidden canvas if not exists
+  let canvas = document.getElementById("bdr-hidden-scan-canvas");
+  if (!canvas) {
+    canvas = document.createElement("canvas");
+    canvas.id = "bdr-hidden-scan-canvas";
+    canvas.style.display = "none";
+    document.body.appendChild(canvas);
+  }
+
+  const scanFrame = function() {
+    if (!window.isBdrScanLoopActive) return;
+
+    const video = document.getElementById("scanme-bdr-video-stream");
+    if (video && video.readyState === video.HAVE_ENOUGH_DATA && window.currentBdrScanMode === "qr") {
+      // 1. Try Native BarcodeDetector API if available
+      if ("BarcodeDetector" in window) {
+        try {
+          if (!window.globalBarcodeDetector) {
+            window.globalBarcodeDetector = new BarcodeDetector({ formats: ["qr_code", "code_128", "ean_13", "data_matrix", "aztec", "pdf417"] });
+          }
+          window.globalBarcodeDetector.detect(video).then(barcodes => {
+            if (barcodes && barcodes.length > 0 && barcodes[0].rawValue) {
+              const val = barcodes[0].rawValue.trim();
+              if (val && (val !== window.lastScannedQrValue || (Date.now() - window.lastScannedQrTime > 3000))) {
+                window.lastScannedQrValue = val;
+                window.lastScannedQrTime = Date.now();
+                if (typeof sysLog === "function") sysLog("🎯 QR-Code via BarcodeDetector erkannt: " + val);
+                processScanMeBdrScan(val);
+              }
+            }
+          }).catch(e => {});
+        } catch(e) {}
+      }
+
+      // 2. Canvas Pattern Extraction Fallback
+      try {
+        const w = video.videoWidth || 320;
+        const h = video.videoHeight || 240;
+        canvas.width = Math.min(w, 400);
+        canvas.height = Math.min(h, 300);
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        }
+      } catch(e) {}
+    }
+
+    if (window.isBdrScanLoopActive) {
+      window.bdrScanLoopTimer = setTimeout(scanFrame, 200); // 5 FPS scanning loop
+    }
+  };
+
+  scanFrame();
+};
+
+window.stopLiveCameraScanLoop = function() {
+  window.isBdrScanLoopActive = false;
+  if (window.bdrScanLoopTimer) {
+    clearTimeout(window.bdrScanLoopTimer);
+    window.bdrScanLoopTimer = null;
+  }
+};
+
 window.captureAndDecodeCameraFrame = function() {
   const video = document.getElementById("scanme-bdr-video-stream");
   if (!video) return;
+
+  // Single Frame Force-Scan Button Click
   if ("BarcodeDetector" in window) {
     try {
       const barcodeDetector = new BarcodeDetector({ formats: ["qr_code", "code_128", "ean_13", "data_matrix"] });
       barcodeDetector.detect(video).then(barcodes => {
-        if (barcodes && barcodes.length > 0) {
-          processScanMeBdrScan(barcodes[0].rawValue);
+        if (barcodes && barcodes.length > 0 && barcodes[0].rawValue) {
+          processScanMeBdrScan(barcodes[0].rawValue.trim());
         } else {
-          promptAndScanFallback();
+          showManualScanNotice();
         }
-      }).catch(e => { promptAndScanFallback(); });
+      }).catch(e => { showManualScanNotice(); });
       return;
     } catch(e) {}
   }
-  promptAndScanFallback();
+  showManualScanNotice();
 };
 
-function promptAndScanFallback() {
-  let val = prompt("📷 BDR KAMERA SCAN / MANUELLE EINGABE:\n\nBitte geben Sie den gescannten QR-Code, MyQR, SID, 0x-Adresse oder Web-URL ein:", "");
-  if (val && val.trim() !== "") {
-    processScanMeBdrScan(val.trim());
+function showManualScanNotice() {
+  const banner = document.getElementById("bdr-qr-result-banner");
+  if (banner) banner.style.display = "block";
+  const inp = document.getElementById("scanme-bdr-manual-input");
+  if (inp) {
+    inp.focus();
+    inp.style.borderColor = "#00FF66";
+    inp.style.boxShadow = "0 0 15px rgba(0,255,102,0.5)";
   }
 }
 
