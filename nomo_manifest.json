@@ -1,14 +1,16 @@
 {
-  "manifestVersion": "1.0.10",
+  "manifestVersion": "1.0.0",
+  "appType": "webOn",
   "appId": "net.sewwwes.scan",
   "appName": "SCAN.SeWWWeS.NET",
-  "appVersion": "1.0.10",
-  "appDescription": "Sovereign Scanner WebOn & SPCL Search Engine - 200ms Auto-Scan, Biometrics, RWA & Identity Trinity",
-  "appIcon": "sewwwes_scan_webon_icon.png",
-  "author": "Dirk Gampe & SeWWWeS Master Architect",
+  "appVersion": "1.0.11",
+  "appDescription": "Sovereign Scanner WebON & SPCL Omnibox Search Engine",
+  "author": "SmartEarthFamily & Dirk Gampe",
   "permissions": [
-    "CAMERA",
-    "EVM_SIGN",
-    "NOMO_ROUTING"
-  ]
+    "camera",
+    "getEvmAddress",
+    "signEvmTransaction",
+    "signAuthMessage"
+  ],
+  "minNomoVersion": "0.1.0"
 }

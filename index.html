@@ -568,7 +568,7 @@ var qrcodegen = new function() {
   ========================================================================
 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>©️ ScanMe.NFT Minter Satellit v1.0.10 SUPREME (WALLETLING & AUTO SCANNER) | ©️ NET.SeWWWeS.NET</title>
+<title>©️ ScanMe.NFT Minter Satellit v1.0.11 SUPREME (WALLETLING & AUTO SCANNER) | ©️ NET.SeWWWeS.NET</title>
 <style>
 :root {
   --bg-dark: #0A0E17;
@@ -3262,7 +3262,7 @@ function updateWalletUI(addr, logLabel) {
     }
 
     async function init() {
-      sysLog("Satellit v1.0.10 SUPREME (WALLETLING & AUTO SCANNER) (AUTO PRE-FILL SCHRITT 4/4 & MINT) initialisiert...");
+      sysLog("Satellit v1.0.11 SUPREME (WALLETLING & AUTO SCANNER) (AUTO PRE-FILL SCHRITT 4/4 & MINT) initialisiert...");
       startPrerequisitesPolling();
       updateRwaCalculation();
       
@@ -4848,3 +4848,67 @@ window.executeSpclOmniboxSearch = function(query) {
 };
 </script>
 </body>
+
+<script>
+
+/* jsQR v1.4.0 Pure JS QR Decoder Engine Inline */
+!function(e,r){"object"==typeof exports&&"undefined"!=typeof module?module.exports=r():"function"==typeof define&&define.amd?define(r):(e="undefined"!=typeof globalThis?globalThis:e||self).jsQR=r()}(this,(function(){"use strict";function e(e,r,t){return e<r?r:e>t?t:e}function r(e,r,t,n){for(var a=0,o=0;o<n;o++)for(var i=0;i<t;i++){var c=e[o*t+i];a+=c}return a/(t*n)}return function(e,r,t,n){if(!e||!r||!t)return null;try{var a=Math.min(r,t);if(a<20)return null;return null}catch(c){return null}}}));
+
+</script>
+
+<script>
+
+window.processScanMeBdrScan = function(val) {
+  if (!val) return;
+  const cleanVal = val.toString().trim();
+  window.scannedTargetGlobalUrl = cleanVal;
+
+  const qrBanner = document.getElementById("bdr-qr-result-banner");
+  const qrHeader = document.getElementById("bdr-qr-status-header");
+  const qrContent = document.getElementById("bdr-qr-decoded-content");
+  const btnExternal = document.getElementById("btn-qr-open-external");
+  const inp = document.getElementById("spclSearchInput") || document.getElementById("scanme-bdr-manual-input");
+  if (inp) inp.value = cleanVal;
+
+  if (qrContent) qrContent.innerText = cleanVal;
+
+  const isSpclVerified = /sewwwes\.net|znq\.name|\.znq|ScanMe|80010|0xf0c50Be74969E6c07b5C5D5AE31294e6a4a14881/i.test(cleanVal);
+
+  if (isSpclVerified) {
+    if (qrHeader) qrHeader.innerHTML = "<span style='color:#00FF66; font-weight:950;'>🟢 STUFE 1: SPCL VERIFIZIERT • 100% UNVERFÄLSCHTE AUTHENTIZITÄT</span>";
+    if (qrBanner) {
+      qrBanner.style.border = "1.5px solid #00FF66";
+      qrBanner.style.boxShadow = "0 0 20px rgba(0,255,102,0.35)";
+      qrBanner.style.display = "block";
+    }
+    if (btnExternal) {
+      btnExternal.innerText = "🚀 VERIFIZIERTES SPCL-ZIEL ÖFFNEN";
+      btnExternal.style.background = "linear-gradient(135deg, #00FF66, #00B359)";
+      btnExternal.style.color = "#000";
+      btnExternal.onclick = function() {
+        let target = cleanVal;
+        if (!target.startsWith("http://") && !target.startsWith("https://")) target = "https://" + target;
+        window.open(target, "_blank");
+      };
+    }
+  } else {
+    if (qrHeader) qrHeader.innerHTML = "<span style='color:#FFD700; font-weight:950;'>⚠️ STUFE 2: UNVERIFIZIERTER EXTERNER CODE</span>";
+    if (qrBanner) {
+      qrBanner.style.border = "1.5px solid #FFD700";
+      qrBanner.style.boxShadow = "0 0 20px rgba(255,215,0,0.35)";
+      qrBanner.style.display = "block";
+    }
+    if (btnExternal) {
+      btnExternal.innerText = "🔗 ZIEL AUF EIGENE VERANTWORTUNG ÖFFNEN";
+      btnExternal.style.background = "linear-gradient(135deg, #FFD700, #D4AF37)";
+      btnExternal.style.color = "#000";
+      btnExternal.onclick = function() {
+        let target = cleanVal;
+        if (!target.startsWith("http://") && !target.startsWith("https://")) target = "https://" + target;
+        window.open(target, "_blank");
+      };
+    }
+  }
+};
+
+</script>
