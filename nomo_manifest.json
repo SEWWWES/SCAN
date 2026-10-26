@@ -1,22 +1,16 @@
 {
   "nomo_manifest_version": "1.1.0",
   "webon_id": "net.sewwwes.scan",
-  "webon_name": "SCAN.SeWWWeS.NET",
-  "webon_version": "1.0.12",
-  "webon_description": "Single-Screen Sovereign Camera Scanner Cockpit der SmartEarthFamily. Real-time QR, Barcode, Biometric Match & ScanMe.NFT Siegel.",
+  "webon_name": "SCAN.SeWWWeS.NET BDR Kamera & Biometrie Scanner",
+  "webon_version": "1.0.15",
   "permissions": [
-    "CAMERA",
-    "INTERNET",
-    "STORAGE",
-    "MICROPHONE",
-    "CLIPBOARD",
-    "SIGN_EVM_TRANSACTION",
-    "GET_EVM_ADDRESS",
-    "SEND_ASSETS",
-    "ADD_CUSTOM_TOKEN",
-    "SIGN_AUTH_MESSAGE",
-    "QR_SCAN",
-    "BIOMETRICS",
-    "NOTIFICATION"
+    "NOMO_GET_EVM_ADDRESS",
+    "NOMO_SEND_ASSETS",
+    "NOMO_SIGN_EVM_TRANSACTION",
+    "NOMO_SIGN_AUTH_MESSAGE",
+    "NOMO_ADD_CUSTOM_TOKEN",
+    "NOMO_CAMERA",
+    "NOMO_BIOMETRICS",
+    "NOMO_QR_SCAN"
   ]
 }

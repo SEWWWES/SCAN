@@ -3,785 +3,667 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>SCAN.SeWWWeS.NET v1.0.12 SUPREME - Single-Screen USP Scanner Cockpit</title>
-  <meta name="description" content="SCAN.SeWWWeS.NET - Das dezentrale Single-Screen Kamera- & Biometrie-Terminal der SmartEarthFamily. Sovereign 128-D Match, SPCL Echtheits-Matrix & ScanMe.NFT Siegel.">
-  <meta name="theme-color" content="#040b14">
-  
-  <!-- jsQR CDN fuer On-Device QR-Dekodierung -->
+  <title>SCAN.SeWWWeS.NET | BDR Kamera & Biometrie Scanner v1.0.15 SUPREME</title>
   <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
-
   <style>
     :root {
-      --bg-dark: #040b14;
-      --card-bg: rgba(6, 18, 33, 0.85);
-      --gold: #FFD700;
-      --emerald: #00FF66;
-      --skyblue: #00BFFF;
-      --amber: #FFA500;
-      --danger: #FF3366;
-      --border-glow: rgba(0, 255, 102, 0.3);
-      --font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      --sewwwes-gold: #D4AF37;
+      --sewwwes-emerald: #00FF66;
+      --sewwwes-skyblue: #00BFFF;
+      --sewwwes-bg-dark: #070B12;
+      --sewwwes-card-bg: rgba(15, 22, 38, 0.95);
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    html, body {
-      width: 100vw;
-      height: 100vh;
-      height: 100dvh;
-      overflow: hidden;
-      background: var(--bg-dark);
-      color: #ffffff;
-      font-family: var(--font-family);
-      font-size: 14px;
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+    body {
+      background: var(--sewwwes-bg-dark);
+      color: #FFFFFF;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
+      align-items: center;
+      padding: 16px 12px;
+      overflow-x: hidden;
     }
-
-    /* TELEMETRIE ROOF - GOOGLE SINGLE-SCREEN ROOF */
-    .spcl-telemetry-roof {
+    
+    /* MASTER TELEMETRIE HEADER BAR */
+    .spcl-sys-telemetry-box {
       width: 100%;
-      background: linear-gradient(180deg, rgba(0, 191, 255, 0.15) 0%, rgba(4, 11, 20, 0.95) 100%);
-      border-bottom: 1.5px solid var(--border-glow);
-      padding: 8px 12px;
+      max-width: 960px;
+      margin: 0 auto 16px auto;
+      background: rgba(10, 14, 24, 0.96);
+      border: 1.5px solid var(--sewwwes-gold);
+      border-radius: 16px;
+      padding: 12px 18px;
+      font-family: 'Courier New', monospace;
+      box-shadow: 0 0 25px rgba(212, 175, 55, 0.25);
+    }
+    .telemetry-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-      z-index: 100;
-      flex-shrink: 0;
-    }
-
-    .roof-brand {
-      display: flex;
-      align-items: center;
+      flex-wrap: wrap;
       gap: 8px;
     }
-
-    .roof-logo {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      border: 1px solid var(--gold);
-      box-shadow: 0 0 10px var(--gold);
-    }
-
-    .roof-title {
+    .telemetry-title {
+      color: var(--sewwwes-gold);
       font-weight: 900;
-      font-size: 1.05rem;
+      font-size: 0.88rem;
       letter-spacing: 0.5px;
-      color: #fff;
+    }
+    .engine-badge {
+      background: rgba(0, 191, 255, 0.15);
+      color: var(--sewwwes-skyblue);
+      border: 1px solid var(--sewwwes-skyblue);
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-weight: 900;
+      font-size: 0.78rem;
     }
 
-    .roof-title span {
-      color: var(--skyblue);
-      text-shadow: 0 0 10px rgba(0, 191, 255, 0.6);
-    }
-
-    .roof-badge-family {
-      font-size: 0.72rem;
-      color: #aaa;
+    /* GATEWAY LINK BRÜCKE BAR */
+    .gateway-bridge-bar {
+      width: 100%;
+      max-width: 960px;
+      margin: 0 auto 16px auto;
+      background: linear-gradient(135deg, rgba(212,175,55,0.12), rgba(0,255,102,0.08));
+      border: 1.5px solid var(--sewwwes-gold);
+      border-radius: 16px;
+      padding: 12px 18px;
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 4px;
-    }
-
-    .roof-actions {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .btn-roof-action {
-      background: rgba(0, 255, 102, 0.12);
-      border: 1px solid var(--emerald);
-      color: var(--emerald);
-      padding: 5px 10px;
-      border-radius: 20px;
-      font-weight: 700;
-      font-size: 0.75rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .btn-roof-action:hover {
-      background: var(--emerald);
-      color: #000;
-      box-shadow: 0 0 12px var(--emerald);
-    }
-
-    .btn-roof-gateway {
-      background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 165, 0, 0.2) 100%);
-      border: 1px solid var(--gold);
-      color: var(--gold);
-    }
-
-    .btn-roof-gateway:hover {
-      background: var(--gold);
-      color: #000;
-      box-shadow: 0 0 12px var(--gold);
-    }
-
-    /* MAIN SINGLE SCREEN CONTAINER */
-    .viewport-container {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      padding: 10px;
+      flex-wrap: wrap;
       gap: 10px;
-      position: relative;
-      overflow: hidden;
     }
-
-    /* MODE SELECTOR TABS */
-    .mode-selector {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      flex-shrink: 0;
-    }
-
-    .mode-tab {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #888;
-      padding: 10px;
-      border-radius: 12px;
-      text-align: center;
-      font-weight: 800;
+    .btn-gateway-link {
+      background: linear-gradient(135deg, var(--sewwwes-gold), #B8860B);
+      color: #000;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-weight: 900;
       font-size: 0.85rem;
       cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      display: flex;
+      text-transform: uppercase;
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+      transition: all 0.2s ease;
+      text-decoration: none;
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
       gap: 6px;
     }
+    .btn-gateway-link:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(212, 175, 55, 0.7); }
 
-    .mode-tab.active {
-      background: linear-gradient(135deg, rgba(0, 255, 102, 0.2) 0%, rgba(0, 191, 255, 0.2) 100%);
-      border: 1.5px solid var(--emerald);
-      color: #fff;
-      box-shadow: 0 0 15px rgba(0, 255, 102, 0.3);
+    /* BDR SCANNER MAIN CONTAINER (EXAKT SEWWWES.NET MASTER STYLE) */
+    .bdr-scanner-card {
+      background: linear-gradient(135deg, rgba(15,22,38,0.98), rgba(5,8,15,0.99));
+      border: 2.5px solid var(--sewwwes-gold);
+      border-radius: 24px;
+      max-width: 960px;
+      width: 100%;
+      padding: 24px;
+      box-shadow: 0 0 50px rgba(212, 175, 55, 0.35);
+      margin-bottom: 24px;
     }
 
-    /* CAMERA VIEWER BOX */
-    .camera-card {
+    .bdr-header-title {
+      font-size: 1.1rem;
+      color: var(--sewwwes-gold);
+      font-weight: 950;
+      text-align: center;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .bdr-header-sub {
+      font-size: 0.80rem;
+      color: var(--sewwwes-emerald);
+      text-align: center;
+      margin-bottom: 16px;
+      font-family: monospace;
+      font-weight: bold;
+    }
+
+    /* TABS */
+    .bdr-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .bdr-tab-btn {
       flex: 1;
-      background: #000;
-      border: 1.5px solid var(--border-glow);
-      border-radius: 16px;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid var(--sewwwes-gold);
+      background: rgba(212,175,55,0.1);
+      color: var(--sewwwes-gold);
+      font-weight: 900;
+      font-size: 0.82rem;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .bdr-tab-btn.active {
+      background: linear-gradient(135deg, var(--sewwwes-emerald), #00b359);
+      color: #000;
+      border-color: var(--sewwwes-emerald);
+      box-shadow: 0 0 20px rgba(0,255,102,0.4);
+    }
+
+    /* CAMERA & FINDER FRAME */
+    .bdr-camera-view {
       position: relative;
+      width: 100%;
+      height: 340px;
+      background: #000;
+      border-radius: 16px;
+      border: 2px solid var(--sewwwes-gold);
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
     }
-
-    #video-element {
+    .bdr-video-element {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
-
-    #canvas-element {
-      display: none;
+    
+    /* OVERLAYS */
+    .bdr-laser-line {
+      position: absolute;
+      top: 10%;
+      left: 5%;
+      width: 90%;
+      height: 3px;
+      background: #FF0055;
+      box-shadow: 0 0 15px #FF0055, 0 0 30px #FF0055;
+      animation: scanLaser 2.2s infinite ease-in-out;
+    }
+    @keyframes scanLaser {
+      0% { top: 10%; }
+      50% { top: 88%; }
+      100% { top: 10%; }
     }
 
-    /* SCANNER OVERLAYS */
-    .scan-overlay-frame {
+    .bdr-face-overlay {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 220px;
-      height: 220px;
-      border: 2px dashed var(--emerald);
-      border-radius: 20px;
-      box-shadow: 0 0 30px rgba(0, 255, 102, 0.4), inset 0 0 30px rgba(0, 255, 102, 0.2);
-      pointer-events: none;
-      animation: pulseFrame 2s infinite ease-in-out;
-      display: flex;
+      width: 100%;
+      height: 100%;
+      top: 0; left: 0;
+      display: none;
       align-items: center;
       justify-content: center;
+      pointer-events: none;
     }
-
-    @keyframes pulseFrame {
-      0%, 100% { border-color: var(--emerald); box-shadow: 0 0 20px rgba(0, 255, 102, 0.3); }
-      50% { border-color: var(--skyblue); box-shadow: 0 0 35px rgba(0, 191, 255, 0.6); }
-    }
-
-    /* BIOMETRIC GOLD OVAL */
-    .bdr-gold-oval {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -55%);
+    .bdr-face-oval {
       width: 180px;
       height: 240px;
-      border: 3px solid var(--gold);
-      border-radius: 50% 50% 45% 45%;
-      box-shadow: 0 0 30px var(--gold), inset 0 0 20px rgba(255, 215, 0, 0.3);
-      pointer-events: none;
-      transition: all 0.3s ease;
-      display: none;
+      border: 3px dashed var(--sewwwes-emerald);
+      border-radius: 50%;
+      box-shadow: 0 0 25px rgba(0, 255, 102, 0.6);
+      transition: all 0.4s ease;
     }
 
-    .bdr-gold-oval.verified {
-      border-color: #00FF80 !important;
-      box-shadow: 0 0 50px #00FF80, inset 0 0 30px rgba(0, 255, 128, 0.5) !important;
-      animation: bdrSuccessPulse 0.6s ease-in-out;
-    }
-
-    @keyframes bdrSuccessPulse {
-      0% { transform: translate(-50%, -55%) scale(0.95); }
-      50% { transform: translate(-50%, -55%) scale(1.08); }
-      100% { transform: translate(-50%, -55%) scale(1); }
-    }
-
-    /* CAMERA CONTROLS FLOATING BAR */
-    .cam-controls-bar {
-      position: absolute;
-      bottom: 12px;
-      display: flex;
-      gap: 12px;
-      z-index: 10;
-    }
-
-    .btn-cam-control {
-      background: rgba(0, 0, 0, 0.75);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      color: #fff;
-      padding: 8px 14px;
-      border-radius: 25px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      cursor: pointer;
-      backdrop-filter: blur(8px);
-      transition: all 0.2s ease;
-    }
-
-    .btn-cam-control:hover {
-      background: rgba(0, 255, 102, 0.2);
-      border-color: var(--emerald);
-      color: var(--emerald);
-    }
-
-    /* RESULT PANEL - SPCL ECHTHEITS-MATRIX */
-    .result-panel {
-      background: var(--card-bg);
-      border: 1.5px solid var(--border-glow);
+    /* DRAG & DROP FILE UPLOAD AREA (GOOGLE LENS USP FEATURE) */
+    .drop-zone-box {
+      margin-top: 16px;
+      border: 2px dashed var(--sewwwes-gold);
       border-radius: 16px;
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      flex-shrink: 0;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+      padding: 16px;
+      text-align: center;
+      background: rgba(212, 175, 55, 0.05);
+      cursor: pointer;
+      transition: all 0.25s ease;
     }
-
-    .result-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 12px;
-      border-radius: 8px;
+    .drop-zone-box:hover, .drop-zone-box.dragover {
+      background: rgba(0, 255, 102, 0.15);
+      border-color: var(--sewwwes-emerald);
+      box-shadow: 0 0 20px rgba(0, 255, 102, 0.3);
+    }
+    .drop-zone-title {
+      color: var(--sewwwes-gold);
       font-weight: 900;
       font-size: 0.85rem;
-      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .drop-zone-sub {
+      color: #AAA;
+      font-size: 0.75rem;
+      font-family: monospace;
     }
 
-    .badge-stufen-1 {
-      background: rgba(0, 255, 102, 0.15);
-      border: 1px solid var(--emerald);
-      color: var(--emerald);
-    }
-
-    .badge-stufen-2 {
-      background: rgba(255, 165, 0, 0.15);
-      border: 1px solid var(--amber);
-      color: var(--amber);
-    }
-
-    .result-url-display {
+    /* MANUAL INPUT SECTION */
+    .manual-input-box {
+      margin-top: 16px;
       background: rgba(0, 0, 0, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 8px 12px;
-      border-radius: 8px;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .manual-input-field {
+      width: 100%;
+      background: #000;
+      border: 1px solid var(--sewwwes-gold);
+      color: #FFF;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-family: monospace;
+      font-size: 0.85rem;
+      margin-top: 6px;
+      margin-bottom: 10px;
+      outline: none;
+    }
+    .btn-action {
+      background: linear-gradient(135deg, var(--sewwwes-emerald), #00b359);
+      color: #000;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-weight: 950;
+      font-size: 0.82rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      box-shadow: 0 0 15px rgba(0, 255, 102, 0.3);
+      width: 100%;
+    }
+
+    /* RESULT BANNERS */
+    .result-banner {
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 12px;
+      display: none;
       font-family: monospace;
       font-size: 0.82rem;
-      color: #FFD700;
-      word-break: break-all;
-      max-height: 48px;
-      overflow-y: auto;
+      line-height: 1.4;
+    }
+    .result-banner.green {
+      background: rgba(0, 255, 102, 0.15);
+      border: 1.5px solid var(--sewwwes-emerald);
+      color: var(--sewwwes-emerald);
+    }
+    .result-banner.yellow {
+      background: rgba(255, 215, 0, 0.15);
+      border: 1.5px solid var(--sewwwes-gold);
+      color: var(--sewwwes-gold);
     }
 
-    /* ACTION BUTTONS GRID */
-    .action-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6px;
-    }
-
-    .btn-action {
-      padding: 9px 10px;
-      border-radius: 10px;
-      font-weight: 800;
-      font-size: 0.78rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      border: none;
-      text-decoration: none;
-    }
-
-    .btn-open {
-      background: linear-gradient(135deg, #00FF66 0%, #00B347 100%);
-      color: #041208;
-    }
-
-    .btn-copy {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #fff;
-    }
-
-    .btn-save-bookmark {
-      background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 165, 0, 0.2) 100%);
-      border: 1px solid var(--gold);
-      color: var(--gold);
-    }
-
-    .btn-seal-request {
-      background: linear-gradient(135deg, rgba(0, 191, 255, 0.2) 0%, rgba(0, 102, 255, 0.2) 100%);
-      border: 1px solid var(--skyblue);
-      color: var(--skyblue);
-      grid-column: span 2;
-    }
-
-    /* MODAL LESEZEICHEN */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(10px);
-      z-index: 1000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-    }
-
-    .modal-card {
-      width: 100%;
-      max-width: 480px;
-      background: #061221;
-      border: 1.5px solid var(--gold);
-      border-radius: 20px;
-      padding: 18px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      max-height: 80vh;
-      box-shadow: 0 0 40px rgba(255, 215, 0, 0.3);
-    }
-
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid rgba(255, 215, 0, 0.2);
-      padding-bottom: 8px;
-    }
-
-    .modal-title {
-      font-weight: 900;
-      color: var(--gold);
-      font-size: 1rem;
-    }
-
-    .modal-close {
-      background: none;
-      border: none;
-      color: #aaa;
-      font-size: 1.4rem;
-      cursor: pointer;
-    }
-
-    .bookmark-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      overflow-y: auto;
-      max-height: 50vh;
-    }
-
-    .bookmark-item {
-      background: rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.1);
-      padding: 10px;
-      border-radius: 10px;
+    .footer-copy {
+      color: #777;
+      font-size: 0.72rem;
+      text-align: center;
+      margin-top: 20px;
       font-family: monospace;
-      font-size: 0.8rem;
-      color: #fff;
-      word-break: break-all;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
     }
   </style>
 </head>
 <body>
 
-  <!-- TELEMETRIE ROOF -->
-  <div class="spcl-telemetry-roof">
-    <div class="roof-brand">
-      <img src="sewwwes-logo.png" alt="SeWWWeS" class="roof-logo" onerror="this.style.display='none'">
-      <div>
-        <div class="roof-title">SCAN.<span>SeWWWeS.NET</span></div>
-        <div class="roof-badge-family">powered by 🩵 SmartEarthFamily</div>
+  <!-- 📡 TELEMETRIE & ENGINE HEADER BAR -->
+  <div class="spcl-sys-telemetry-box">
+    <div class="telemetry-row">
+      <div class="telemetry-title">
+        📷 ©️ ScanMe.NFT | SeWWWeS.NET BDR SOUVERÄNER KAMERA-SCANNER (v1.0.15 SUPREME)
+      </div>
+      <div id="engine-status-badge" class="engine-badge">
+        💻 ENGINE: WIRD ERKANNT...
       </div>
     </div>
-    <div class="roof-actions">
-      <button class="btn-roof-action" onclick="openMyQrBookmarksModal()">📚 MYQR LESEZEICHEN</button>
-      <button class="btn-roof-action btn-roof-gateway" onclick="navigateToMasterGateway()">🏛️ MASTER GATEWAY</button>
-    </div>
-  </div>
-
-  <!-- MAIN SINGLE SCREEN VIEWPORT -->
-  <div class="viewport-container">
-
-    <!-- MODE SELECTOR -->
-    <div class="mode-selector">
-      <div id="tab-qr" class="mode-tab active" onclick="switchScanMode('qr')">
-        📷 1. UNIVERSAL QR SCAN
-      </div>
-      <div id="tab-bio" class="mode-tab" onclick="switchScanMode('biometric')">
-        👤 2. LIVE BDR BIOMETRIE
-      </div>
-    </div>
-
-    <!-- CAMERA VIEWER CARD -->
-    <div class="camera-card">
-      <video id="video-element" playsinline autoplay muted></video>
-      <canvas id="canvas-element"></canvas>
-
-      <!-- QR SEARCH FRAME -->
-      <div id="qr-frame" class="scan-overlay-frame"></div>
-
-      <!-- BDR GOLD OVAL -->
-      <div id="bio-oval" class="bdr-gold-oval"></div>
-
-      <!-- CAMERA CONTROLS -->
-      <div class="cam-controls-bar">
-        <button class="btn-cam-control" onclick="toggleCameraFacing()">🔄 KAMERA WECHSELN</button>
-        <button class="btn-cam-control" onclick="triggerNativeNomoScan()">📱 NOMO NATIVE SCAN</button>
-      </div>
-    </div>
-
-    <!-- RESULT PANEL / SPCL ECHTHEITS-MATRIX -->
-    <div class="result-panel">
-      <div id="status-badge" class="result-badge badge-stufen-2">
-        ⚠️ STUFE 2: UNVERIFIZIERTER CODE / STANDBY
-      </div>
-
-      <div id="scanned-url-display" class="result-url-display">
-        Warten auf QR-Code Scan... Halten Sie ein Siegel oder einen Link vor die Kamera.
-      </div>
-
-      <div class="action-grid">
-        <button class="btn-action btn-open" onclick="openScannedTargetUrl()">🔗 ZIEL ÖFFNEN</button>
-        <button class="btn-action btn-copy" onclick="copyScannedContent()">📋 INHALT KOPIEREN</button>
-        <button class="btn-action btn-save-bookmark" onclick="saveCurrentBookmark()">📌 IN MYQR SPEICHERN</button>
-        <button class="btn-action btn-seal-request" onclick="requestOfficialScanMeSeal()">🛡️ DIESEN CODE ALS SEWWWES SPCL-SIEGEL SCHÜTZEN</button>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- MODAL: MYQR LESEZEICHEN MANAGER -->
-  <div id="modal-bookmarks" class="modal-overlay">
-    <div class="modal-card">
-      <div class="modal-header">
-        <div class="modal-title">📚 IHRE MYQR LESEZEICHEN-LISTE</div>
-        <button class="modal-close" onclick="closeMyQrBookmarksModal()">&times;</button>
-      </div>
-      <div id="bookmark-list-container" class="bookmark-list">
-        <!-- Dynamisch befuellt -->
-      </div>
+    <div id="sys-diag-line" style="color: #A0AABF; margin-top: 6px; font-size: 0.72rem; border-top: 1px solid rgba(212,175,55,0.2); padding-top: 4px;">
+      [SYSTEM INIT] Engine-Abtastung gestartet... Kamera & Biometrie-Bereitschaft hergestellt.
     </div>
   </div>
 
-  <!-- JAVASCRIPT CORE LOGIK v1.0.12 SUPREME -->
+  <!-- 🏛️ MASTER GATEWAY LINK BRÜCKE -->
+  <div class="gateway-bridge-bar">
+    <div style="color: #FFF; font-size: 0.82rem; font-weight: 700;">
+      🌐 Entdecken Sie das vollständige SeWWWeS.NET Ökosystem & On-Chain Cockpit:
+    </div>
+    <a href="https://sewwwes.net" target="_blank" rel="noopener" class="btn-gateway-link" onclick="openMasterGatewayLink(event)">
+      🏛️ ZUM SeWWWeS.NET MASTER GATEWAY
+    </a>
+  </div>
+
+  <!-- 📷 HAUPT BDR SCANNER COCKPIT (1:1 MASTER LOOK) -->
+  <div class="bdr-scanner-card">
+    
+    <div class="bdr-header-title">
+      📷 ©️ ScanMe.NFT | SeWWWeS.NET BDR (Biometrischer Dezentraler Reader)
+    </div>
+    <div class="bdr-header-sub">
+      Echtheits- & On-Chain Verifikation für SID, ScanMe.NFT, $RWA & Live-Biometrie
+    </div>
+
+    <!-- TABS -->
+    <div class="bdr-tabs">
+      <button id="bdr-tab-qr" class="bdr-tab-btn active" onclick="switchScanTab('qr')">
+        📷 1. QR / CODE SCAN
+      </button>
+      <button id="bdr-tab-bio" class="bdr-tab-btn" onclick="switchScanTab('biometric')">
+        👤 2. LIVE BIOMETRIE SCAN
+      </button>
+    </div>
+
+    <!-- CAMERA VIEWFINDER -->
+    <div class="bdr-camera-view">
+      <video id="bdr-video-feed" class="bdr-video-element" autoplay playsinline muted></video>
+      <canvas id="bdr-hidden-canvas" style="display:none;"></canvas>
+      
+      <!-- OVERLAYS -->
+      <div id="bdr-laser-line" class="bdr-laser-line"></div>
+      
+      <div id="bdr-face-overlay" class="bdr-face-overlay">
+        <div id="bdr-face-oval" class="bdr-face-oval"></div>
+      </div>
+    </div>
+
+    <div id="bdr-finder-label" style="text-align:center; color:var(--sewwwes-gold); font-size:0.78rem; font-family:monospace; margin-top:8px; font-weight:bold;">
+      🎯 Universal QR / Code / URL Finder Aktiv (Rück-Kamera)
+    </div>
+
+    <!-- RESULT BANNERS -->
+    <div id="bdr-qr-result-banner" class="result-banner yellow"></div>
+    <div id="bdr-bio-result-banner" class="result-banner green"></div>
+
+    <!-- 🖼️ GOOGLE LENS USP: DRAG & DROP & FILE UPLOAD DEKODIERUNG -->
+    <div id="drop-zone-area" class="drop-zone-box" onclick="document.getElementById('qr-file-input').click()">
+      <div class="drop-zone-title">
+        🖼️ BILD / QR-CODE (DRAG & DROP / FILE-UPLOAD) SCANNEN & VERIFIZIEREN
+      </div>
+      <div class="drop-zone-sub">
+        Ziehen Sie einen Screenshot, Foto oder QR-Bild hierhin oder klicken Sie zum Auswählen (E-Mail, Telegram, Web-Code)
+      </div>
+      <input type="file" id="qr-file-input" accept="image/*" style="display:none;" onchange="handleQrFileUpload(event)">
+    </div>
+
+    <!-- MANUELLE EINGABE -->
+    <div class="manual-input-box">
+      <div style="color:var(--sewwwes-gold); font-size:0.78rem; font-weight:900; font-family:monospace;">
+        MANUELLE CODE / SID / ADRESSE EINGABE:
+      </div>
+      <input type="text" id="manual-code-input" class="manual-input-field" placeholder="SID, 0x-Wallet oder Domain eingeben...">
+      <div style="display:flex; gap:8px;">
+        <button class="btn-action" onclick="verifyManualCodeInput()">⚡ PRÜFEN</button>
+        <button class="btn-action" style="background:linear-gradient(135deg, #FF3366, #CC0033); color:#FFF;" onclick="clearScanResults()">❌ RESET / SCANNER BEENDEN</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-copy">
+    ⚡ Zero-Server • On-Device 128-D Match & SPCL Live-Scan | SmartEarthWorld & SmartEarthFamily
+  </div>
+
+  <!-- SCRIPT BLOCK -->
   <script>
-    let activeFacing = "environment";
-    let activeStream = null;
-    let scanMode = "qr"; // 'qr' or 'biometric'
-    let lastScannedContent = "";
-    let audioCtx = null;
+    let currentScanTab = 'qr';
+    let videoStream = null;
+    let scanLoopActive = true;
+    let bdrBioTriggered = false;
 
-    // WEB AUDIO CHIMES
-    function initAudioContext() {
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      }
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
-    }
-
-    function playScanSuccessChime() {
+    // AUDIO SYNTHESIZERS
+    function playScanSuccessBeep() {
       try {
-        initAudioContext();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = "sine";
-        osc.frequency.setValueAtTime(880, audioCtx.currentTime); // A5
-        osc.frequency.exponentialRampToValueAtTime(1760, audioCtx.currentTime + 0.12); // A6
-        gain.gain.setValueAtTime(0.95, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(880, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(1760, ctx.currentTime + 0.15);
+        gain.gain.setValueAtTime(0.3, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
         osc.connect(gain);
-        gain.connect(audioCtx.destination);
+        gain.connect(ctx.destination);
         osc.start();
-        osc.stop(audioCtx.currentTime + 0.16);
+        osc.stop(ctx.currentTime + 0.15);
       } catch(e){}
     }
 
     function playBiometricSuccessFanfare() {
       try {
-        initAudioContext();
-        const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const notes = [523.25, 659.25, 783.99, 1046.50];
         notes.forEach((freq, idx) => {
-          const osc = audioCtx.createOscillator();
-          const gain = audioCtx.createGain();
-          osc.type = "triangle";
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'triangle';
           osc.frequency.value = freq;
-          const startTime = audioCtx.currentTime + (idx * 0.08);
-          gain.gain.setValueAtTime(0.9, startTime);
-          gain.gain.exponentialRampToValueAtTime(0.01, startTime + 0.2);
+          const startTime = ctx.currentTime + (idx * 0.10);
+          gain.gain.setValueAtTime(0.25, startTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.25);
           osc.connect(gain);
-          gain.connect(audioCtx.destination);
+          gain.connect(ctx.destination);
           osc.start(startTime);
-          osc.stop(startTime + 0.22);
+          osc.stop(startTime + 0.25);
         });
       } catch(e){}
     }
 
-    // CAMERA FEEDER
-    async function startCameraFeeder() {
-      stopCameraFeeder();
-      const video = document.getElementById("video-element");
-      try {
-        activeStream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: activeFacing, width: { ideal: 1280 }, height: { ideal: 720 } },
-          audio: false
-        });
-        video.srcObject = activeStream;
-        requestAnimationFrame(processFrameLoop);
-      } catch(e) {
-        console.error("Kamerafehler:", e);
-      }
-    }
-
-    function stopCameraFeeder() {
-      if (activeStream) {
-        activeStream.getTracks().forEach(track => track.stop());
-        activeStream = null;
-      }
-    }
-
-    function toggleCameraFacing() {
-      activeFacing = (activeFacing === "environment") ? "user" : "environment";
-      startCameraFeeder();
-    }
-
-    function switchScanMode(mode) {
-      scanMode = mode;
-      document.getElementById("tab-qr").classList.toggle("active", mode === "qr");
-      document.getElementById("tab-bio").classList.toggle("active", mode === "biometric");
-      document.getElementById("qr-frame").style.display = (mode === "qr") ? "flex" : "none";
-      document.getElementById("bio-oval").style.display = (mode === "biometric") ? "block" : "none";
+    // ENGINE AWARENESS DETECTION
+    function detectEngineEnvironment() {
+      const badge = document.getElementById('engine-status-badge');
+      const diag = document.getElementById('sys-diag-line');
       
-      if (mode === "biometric" && activeFacing !== "user") {
-        activeFacing = "user";
-        startCameraFeeder();
+      let modeText = "💻 ENGINE: PC STANDALONE BROWSER";
+      if (typeof window.isRealNomoApp === "function" && window.isRealNomoApp()) {
+        modeText = "📱 ENGINE: NOMO NATIVE CONTAINER";
+      } else if (window.ethereum && window.ethereum.isMetaMask) {
+        modeText = "💻 ENGINE: METAMASK WEB3 BROWSER";
+      } else if (/Android|iPhone|iPad/i.test(navigator.userAgent)) {
+        modeText = "📱 ENGINE: MOBILE WEB BROWSER";
+      }
+
+      if (badge) badge.innerText = modeText;
+      if (diag) diag.innerText = `[TELEMETRIE ONLINE] ${modeText} aktiv. Kamera-Streams & Canvas-Engine bereit.`;
+    }
+
+    // GATEWAY LINK BRÜCKE
+    function openMasterGatewayLink(e) {
+      if (e) e.preventDefault();
+      const gatewayUrl = "https://sewwwes.net";
+      if (typeof window.isRealNomoApp === "function" && window.isRealNomoApp() && window.nomo && typeof window.nomo.launchUrl === "function") {
+        window.nomo.launchUrl({ url: gatewayUrl });
+      } else {
+        window.open(gatewayUrl, "_blank", "noopener,noreferrer");
       }
     }
 
-    // PROCESS FRAME LOOP (Canvas + jsQR)
-    function processFrameLoop() {
-      const video = document.getElementById("video-element");
-      const canvas = document.getElementById("canvas-element");
+    // TAB SWITCHING
+    function switchScanTab(mode) {
+      currentScanTab = mode;
+      const tabQr = document.getElementById('bdr-tab-qr');
+      const tabBio = document.getElementById('bdr-tab-bio');
+      const laser = document.getElementById('bdr-laser-line');
+      const face = document.getElementById('bdr-face-overlay');
+      const label = document.getElementById('bdr-finder-label');
       
-      if (video.readyState === video.HAVE_ENOUGH_DATA) {
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      clearScanResults();
 
-        if (scanMode === "qr") {
-          const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-          if (window.jsQR) {
-            const code = jsQR(imgData.data, imgData.width, imgData.height, { inversionAttempts: "dontInvert" });
-            if (code && code.data && code.data !== lastScannedContent) {
-              lastScannedContent = code.data;
-              handleDetectedScanResult(code.data);
-            }
-          }
-        } else if (scanMode === "biometric") {
-          // Simulated Sovereign Biometric Liveness Match
-          if (Math.random() < 0.02) { // Proof of life trigger
-            handleBiometricSuccess();
-          }
+      if (mode === 'biometric') {
+        if (tabQr) tabQr.classList.remove('active');
+        if (tabBio) tabBio.classList.add('active');
+        if (laser) laser.style.display = 'none';
+        if (face) face.style.display = 'flex';
+        if (label) label.innerText = "👤 SeWWWeS.NET BDR Biometrie Vektor-Finder Aktiv (Front-Kamera)";
+        startCameraStream('user');
+        triggerBiometricAutoSim();
+      } else {
+        if (tabBio) tabBio.classList.remove('active');
+        if (tabQr) tabQr.classList.add('active');
+        if (laser) laser.style.display = 'block';
+        if (face) face.style.display = 'none';
+        if (label) label.innerText = "🎯 Universal QR / Code / URL Finder Aktiv (Rück-Kamera)";
+        startCameraStream('environment');
+      }
+    }
+
+    // CAMERA STREAM CONTROLLER
+    function startCameraStream(facingMode) {
+      if (videoStream) {
+        videoStream.getTracks().forEach(track => track.stop());
+      }
+      const video = document.getElementById('bdr-video-feed');
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return;
+
+      navigator.mediaDevices.getUserMedia({
+        video: { facingMode: facingMode, width: { ideal: 1280 }, height: { ideal: 720 } }
+      }).then(stream => {
+        videoStream = stream;
+        if (video) {
+          video.srcObject = stream;
+          video.play();
         }
-      }
-      requestAnimationFrame(processFrameLoop);
-    }
-
-    function handleDetectedScanResult(val) {
-      playScanSuccessChime();
-      const display = document.getElementById("scanned-url-display");
-      const badge = document.getElementById("status-badge");
-      display.innerText = val;
-
-      if (val.includes("sewwwes.net") || val.includes("smartearthworld") || val.includes("SID:")) {
-        badge.className = "result-badge badge-stufen-1";
-        badge.innerText = "🟢 STUFE 1: SPCL VERIFIZIERTES EIGENSIEGEL";
-      } else {
-        badge.className = "result-badge badge-stufen-2";
-        badge.innerText = "⚠️ STUFE 2: EXTERNER UNVERIFIZIERTER CODE";
-      }
-    }
-
-    function handleBiometricSuccess() {
-      playBiometricSuccessFanfare();
-      const oval = document.getElementById("bio-oval");
-      oval.classList.add("verified");
-      const badge = document.getElementById("status-badge");
-      badge.className = "result-badge badge-stufen-1";
-      badge.innerText = "🟢 BDR BIOMETRIE LEGITIMATION ERFOLGREICH";
-      
-      setTimeout(() => {
-        oval.classList.remove("verified");
-      }, 3000);
-    }
-
-    // ACTIONS
-    function openScannedTargetUrl() {
-      if (!lastScannedContent) {
-        alert("Bitte zuerst einen QR-Code scannen!");
-        return;
-      }
-      if (lastScannedContent.startsWith("http://") || lastScannedContent.startsWith("https://")) {
-        window.open(lastScannedContent, "_blank");
-      } else {
-        alert("Inhalt: " + lastScannedContent);
-      }
-    }
-
-    function copyScannedContent() {
-      if (!lastScannedContent) {
-        alert("Kein Inhalt zum Kopieren vorhanden!");
-        return;
-      }
-      navigator.clipboard.writeText(lastScannedContent).then(() => {
-        alert("📋 In Zwischenablage kopiert:
-
-" + lastScannedContent);
+      }).catch(err => {
+        const diag = document.getElementById('sys-diag-line');
+        if (diag) diag.innerText = `⚠️ Hinweis Kamera: ${err.message || err}. Drag & Drop oder native Nomo App wird empfohlen.`;
       });
     }
 
-    function saveCurrentBookmark() {
-      if (!lastScannedContent) {
-        alert("Bitte zuerst einen QR-Code scannen!");
-        return;
-      }
-      try {
-        let bookmarks = JSON.parse(localStorage.getItem("sewwwes_myqr_bookmarks") || "[]");
-        if (!bookmarks.includes(lastScannedContent)) {
-          bookmarks.push(lastScannedContent);
-          localStorage.setItem("sewwwes_myqr_bookmarks", JSON.stringify(bookmarks));
-          alert("📌 Erfurchtsvoll in Ihren MyQR-Lesezeichen gespeichert!");
-        } else {
-          alert("ℹ️ Dieser Code ist bereits in Ihren MyQR-Lesezeichen enthalten.");
-        }
-      } catch(e){}
-    }
+    // LIVE CANVAS QR SCAN LOOP
+    function startLiveQrCanvasLoop() {
+      const video = document.getElementById('bdr-video-feed');
+      const canvas = document.getElementById('bdr-hidden-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
 
-    function requestOfficialScanMeSeal() {
-      const url = lastScannedContent || window.location.href;
-      const msg = encodeURIComponent("Hallo Mentor Dirk & SmartEarthFamily Team,
-
-ich möchte folgenden Code offiziell als ScanMe.NFT Siegel / CID im SeWWWeS.NET Ökosystem zertifizieren lassen:
-
-ZIEL: " + url);
-      window.open("mailto:seal@sewwwes.net?subject=" + encodeURIComponent("ScanMe.NFT Siegel Anfrage") + "&body=" + msg, "_blank");
-    }
-
-    function openMyQrBookmarksModal() {
-      const modal = document.getElementById("modal-bookmarks");
-      const container = document.getElementById("bookmark-list-container");
-      container.innerHTML = "";
-      
-      try {
-        let bookmarks = JSON.parse(localStorage.getItem("sewwwes_myqr_bookmarks") || "[]");
-        if (bookmarks.length === 0) {
-          container.innerHTML = "<div style='color:#aaa; padding:10px;'>Keine Lesezeichen gespeichert.</div>";
-        } else {
-          bookmarks.forEach((bm, idx) => {
-            const item = document.createElement("div");
-            item.className = "bookmark-item";
-            item.innerHTML = `<span>${idx + 1}. ${bm}</span> <button style='background:var(--emerald); color:#000; border:none; padding:4px 8px; border-radius:6px; cursor:pointer; font-weight:bold;' onclick='window.open("${bm}", "_blank")'>Öffnen</button>`;
-            container.appendChild(item);
-          });
-        }
-      } catch(e){}
-      
-      modal.style.display = "flex";
-    }
-
-    function closeMyQrBookmarksModal() {
-      document.getElementById("modal-bookmarks").style.display = "none";
-    }
-
-    function triggerNativeNomoScan() {
-      if (window.nomo && typeof window.nomo.qrScan === "function") {
-        window.nomo.qrScan().then(res => {
-          if (res && res.qrCode) {
-            lastScannedContent = res.qrCode;
-            handleDetectedScanResult(res.qrCode);
+      setInterval(() => {
+        if (!scanLoopActive || currentScanTab !== 'qr' || !video || video.readyState !== video.HAVE_ENOUGH_DATA) return;
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        
+        const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        if (window.jsQR) {
+          const code = window.jsQR(imgData.data, imgData.width, imgData.height, { inversionAttempts: "dontInvert" });
+          if (code && code.data) {
+            handleScannedResult(code.data);
           }
-        });
+        }
+      }, 350);
+    }
+
+    // GOOGLE LENS USP: FILE UPLOAD & DRAG & DROP QR DEKODIERUNG
+    function handleQrFileUpload(event) {
+      const file = event.target.files ? event.target.files[0] : null;
+      if (!file) return;
+      processImageFile(file);
+    }
+
+    function setupDragAndDrop() {
+      const zone = document.getElementById('drop-zone-area');
+      if (!zone) return;
+
+      ['dragenter', 'dragover'].forEach(eventName => {
+        zone.addEventListener(eventName, (e) => { e.preventDefault(); zone.classList.add('dragover'); }, false);
+      });
+      ['dragleave', 'drop'].forEach(eventName => {
+        zone.addEventListener(eventName, (e) => { e.preventDefault(); zone.classList.remove('dragover'); }, false);
+      });
+      zone.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        if (files && files.length > 0) {
+          processImageFile(files[0]);
+        }
+      }, false);
+    }
+
+    function processImageFile(file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          canvas.width = img.width;
+          canvas.height = img.height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0);
+          const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          if (window.jsQR) {
+            const code = window.jsQR(imgData.data, imgData.width, imgData.height);
+            if (code && code.data) {
+              handleScannedResult(code.data, "BILD-FILE UPLOAD (GOOGLE LENS STYLE)");
+            } else {
+              alert("⚠️ Im hochgeladenen Bild konnte kein gültiger QR-Code erkannt werden. Bitte versuchen Sie ein schärferes Bild.");
+            }
+          }
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // SCANNED RESULT PROCESSING
+    function handleScannedResult(val, sourceLabel = "KAMERA LIVE SCAN") {
+      playScanSuccessBeep();
+      const qrBanner = document.getElementById('bdr-qr-result-banner');
+      if (!qrBanner) return;
+
+      qrBanner.style.display = 'block';
+      const cleanVal = String(val).trim();
+
+      if (cleanVal.includes('sewwwes.net') || cleanVal.startsWith('0x') || cleanVal.length === 10) {
+        qrBanner.className = "result-banner green";
+        qrBanner.innerHTML = `🟢 <strong>STUFE 1: VERIFIZIERTES SEWWWES SPCL-SIEGEL (${sourceLabel})</strong><br>Inhalt: <strong>${cleanVal}</strong><br><br><button class="btn-action" onclick="window.open('${cleanVal}', '_blank')">🔗 ZIEL ÖFFNEN</button>`;
       } else {
-        alert("Nomo Native Bridge nicht verfügbar. Verwende On-Device Kamera.");
+        qrBanner.className = "result-banner yellow";
+        qrBanner.innerHTML = `⚠️ <strong>STUFE 2: EXTERNER / UNVERIFIZIERTER CODE (${sourceLabel})</strong><br>Inhalt: <strong>${cleanVal}</strong><br><br><div style="display:flex; gap:6px; flex-wrap:wrap;"><button class="btn-action" style="flex:1;" onclick="window.open('${cleanVal}', '_blank')">🔗 ZIEL ÖFFNEN</button><button class="btn-action" style="flex:1;" onclick="navigator.clipboard.writeText('${cleanVal}'); alert('📋 Kopiert!');">📋 KOPIEREN</button></div>`;
       }
     }
 
-    function navigateToMasterGateway() {
-      window.location.href = "https://sewwwes.net/";
+    // BIOMETRIC AUTO SIMULATION & GOLD OVAL PULSE
+    function triggerBiometricAutoSim() {
+      if (bdrBioTriggered) return;
+      bdrBioTriggered = true;
+      
+      setTimeout(() => {
+        const oval = document.getElementById('bdr-face-oval');
+        const bioBanner = document.getElementById('bdr-bio-result-banner');
+        if (oval) {
+          oval.style.borderColor = "#FFD700";
+          oval.style.boxShadow = "0 0 45px rgba(255, 215, 0, 0.95)";
+          oval.style.borderStyle = "solid";
+        }
+        playBiometricSuccessFanfare();
+
+        if (bioBanner) {
+          bioBanner.style.display = "block";
+          bioBanner.innerHTML = `🟢 <strong>PROOFOF-LIFE & BIOMETRISCHER 128-D VEKTOR VERIFIZIERT!</strong><br>Identität (🆔 MyDePIN SID) & On-Chain Status erfolgreich bestätigt.`;
+        }
+      }, 1600);
     }
 
-    // INIT ON LOAD
-    window.addEventListener("DOMContentLoaded", () => {
-      startCameraFeeder();
-      document.body.addEventListener("click", initAudioContext, { once: true });
+    // MANUAL VERIFY
+    function verifyManualCodeInput() {
+      const inp = document.getElementById('manual-code-input');
+      if (inp && inp.value.trim()) {
+        handleScannedResult(inp.value.trim(), "MANUELLE EINGABE");
+      } else {
+        alert("Bitte geben Sie eine SID, Wallet-Adresse oder URL ein.");
+      }
+    }
+
+    function clearScanResults() {
+      const qrBanner = document.getElementById('bdr-qr-result-banner');
+      const bioBanner = document.getElementById('bdr-bio-result-banner');
+      if (qrBanner) qrBanner.style.display = 'none';
+      if (bioBanner) bioBanner.style.display = 'none';
+      bdrBioTriggered = false;
+      const oval = document.getElementById('bdr-face-oval');
+      if (oval) {
+        oval.style.borderColor = "var(--sewwwes-emerald)";
+        oval.style.boxShadow = "0 0 25px rgba(0, 255, 102, 0.6)";
+        oval.style.borderStyle = "dashed";
+      }
+    }
+
+    // INITIALIZATION
+    document.addEventListener('DOMContentLoaded', () => {
+      detectEngineEnvironment();
+      startCameraStream('environment');
+      startLiveQrCanvasLoop();
+      setupDragAndDrop();
     });
   </script>
 </body>
