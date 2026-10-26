@@ -1,16 +1,22 @@
 {
-  "manifestVersion": "1.0.0",
-  "appType": "webOn",
-  "appId": "net.sewwwes.scan",
-  "appName": "SCAN.SeWWWeS.NET",
-  "appVersion": "1.0.11",
-  "appDescription": "Sovereign Scanner WebON & SPCL Omnibox Search Engine",
-  "author": "SmartEarthFamily & Dirk Gampe",
+  "nomo_manifest_version": "1.1.0",
+  "webon_id": "net.sewwwes.scan",
+  "webon_name": "SCAN.SeWWWeS.NET",
+  "webon_version": "1.0.12",
+  "webon_description": "Single-Screen Sovereign Camera Scanner Cockpit der SmartEarthFamily. Real-time QR, Barcode, Biometric Match & ScanMe.NFT Siegel.",
   "permissions": [
-    "camera",
-    "getEvmAddress",
-    "signEvmTransaction",
-    "signAuthMessage"
-  ],
-  "minNomoVersion": "0.1.0"
+    "CAMERA",
+    "INTERNET",
+    "STORAGE",
+    "MICROPHONE",
+    "CLIPBOARD",
+    "SIGN_EVM_TRANSACTION",
+    "GET_EVM_ADDRESS",
+    "SEND_ASSETS",
+    "ADD_CUSTOM_TOKEN",
+    "SIGN_AUTH_MESSAGE",
+    "QR_SCAN",
+    "BIOMETRICS",
+    "NOTIFICATION"
+  ]
 }
