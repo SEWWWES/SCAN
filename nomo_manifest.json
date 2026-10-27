@@ -1,15 +1,15 @@
 {
-  "nomo_manifest_version": "1.0.0",
-  "app_id": "net.sewwwes.scan",
-  "app_name": "ScanMe.NFT BDR Camera & Biometrie Scanner",
-  "app_version": "1.0.36",
-  "app_vendor": "SeWWWeS.NET SmartEarthWorld",
-  "app_description": "Souveräner BDR Kamera & Biometrie Scanner, 128-D Vektor Proof-of-Life, QR / Barcode Finder & On-Chain Audit für NET.SeWWWeS.NET.",
+  "manifestVersion": "1.0.0",
+  "webonVersion": "1.0.37",
+  "webonId": "net.sewwwes.scan",
+  "webonName": "SCAN.SeWWWeS.NET | BDR Kamera & Biometrie Scanner",
+  "webonDescription": "SeWWWeS.NET SmartEarthWorld BDR Kamera & Biometrie Scanner (v1.0.37 SUPREME)",
+  "webonIcon": "sewwwes_scan_webon_icon.png",
   "permissions": [
-    "nomo.permission.CAMERA",
-    "nomo.permission.MICROPHONE",
-    "nomo.permission.GET_INSTALLED_WEBONS",
-    "nomo.permission.INSTALL_WEBON"
-  ],
-  "webon_url": "https://scan.sewwwes.net"
+    "nomo.getEvmAddress",
+    "nomo.signEvmTransaction",
+    "nomo.signAuthMessage",
+    "nomo.addCustomToken",
+    "nomo.qrScan"
+  ]
 }
