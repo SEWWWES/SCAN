@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>SCAN.SeWWWeS.NET | BDR Kamera & Biometrie Scanner v1.0.18 SUPREME</title>
+  <title>SCAN.SeWWWeS.NET | BDR Kamera & Biometrie Scanner v1.0.19 SUPREME</title>
   <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
   <style>
     :root {
@@ -301,78 +301,131 @@
 <body>
 
   <!-- 🌐🛡️ 4S NOMO REVEAL & SYSTEM TELEMETRIE (GEKLAPPT / SHRUNK BADGE) -->
-  <div id="pc-reveal-shrunk-badge" onclick="expandNomoRevealMatrix()" style="display:none; position:relative; width:100%; max-width:960px; margin:0 auto 12px auto; background:linear-gradient(135deg, rgba(20,24,40,0.98), rgba(5,6,12,0.99)); border:1.5px solid var(--sewwwes-gold); border-radius:14px; padding:8px 16px; text-align:center; box-shadow:0 4px 18px rgba(212,175,55,0.4); cursor:pointer; transition:all 0.3s ease;">
-    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
-      <div style="display:flex; align-items:center; gap:8px; text-align:left;">
-        <span style="font-size:1.1rem; filter:drop-shadow(0 0 6px #FFD700);">🔑</span>
-        <div>
-          <div style="color:var(--sewwwes-gold); font-size:0.80rem; font-weight:950; letter-spacing:0.5px; text-transform:uppercase;">
-            4S NOMO REVEAL & TELEMETRIE (v1.0.18 SUPREME)
-          </div>
-          <div style="color:#00FF66; font-size:0.72rem; font-weight:800;">
-            powered by 🩵 SmartEarthFamily
-          </div>
-        </div>
-      </div>
-      <div style="display:flex; align-items:center; gap:8px;">
-        <div id="shrunk-engine-badge" class="engine-badge" style="font-size:0.70rem; padding:2px 8px;">
-          💻 ENGINE DETECT...
-        </div>
-        <div style="background:linear-gradient(135deg, #FFD700, #D4AF37); color:#000; font-weight:950; font-size:0.72rem; padding:4px 12px; border-radius:8px; text-transform:uppercase; box-shadow:0 0 10px rgba(255,215,0,0.4); white-space:nowrap;">
-          📂 TELEMETRIE & REVEAL ANZEIGEN
-        </div>
-      </div>
+  <div id="pc-reveal-shrunk-badge" onclick="expandNomoRevealMatrix()" style="display:none; position:relative; width:100%; max-width:820px; margin:0 auto 8px auto; background:linear-gradient(135deg, rgba(20,24,40,0.98), rgba(5,6,12,0.99)); border:1.5px solid #D4AF37; border-top:none; border-radius:0 0 14px 14px; padding:6px 16px; text-align:center; box-shadow:0 4px 18px rgba(212,175,55,0.4); cursor:pointer; transition:all 0.3s ease;"><div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:nowrap; gap:10px;"><div style="display:flex; align-items:center; gap:8px; text-align:left; overflow:hidden; white-space:nowrap;"><span style="font-size:1.1rem; filter:drop-shadow(0 0 6px #FFD700);">🌐🛡️</span><div style="color:#D4AF37; font-size:0.78rem; font-weight:950; letter-spacing:0.5px; text-transform:uppercase; text-overflow:ellipsis; overflow:hidden;">4S NOMO REVEAL TERMINAL (Dirk Mentor • Master WebOn • Nomo.ID • BDR Biometrie)</div></div><div style="background:linear-gradient(135deg, #FFD700, #D4AF37); color:#000; font-weight:950; font-size:0.72rem; padding:4px 12px; border-radius:8px; text-transform:uppercase; box-shadow:0 0 10px rgba(255,215,0,0.4); white-space:nowrap; flex-shrink:0;">📂 ANZEIGEN / AUSKLAPPEN</div></div></div>
+
+<div id="pc-nomo-reveal-matrix-container" style="width:100%; max-width:820px; background:rgba(12,15,25,0.98); border:2.5px solid #D4AF37; border-radius:24px; padding:22px; margin:18px auto; box-shadow:0 0 45px rgba(212,175,55,0.45); text-align:center; display:none;">
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1.5px solid rgba(212,175,55,0.35); padding-bottom:10px;">
+    <div style="color:#D4AF37; font-size:1.05rem; font-weight:950; text-transform:uppercase; letter-spacing:1px; text-align:left;">
+      🌐🛡️ SeWWWeS.NET 🌎SmartEarthWorld🔍 SPCL CONTROL LABELING | SIGNAL VERIFIED (v1.3.434 SUPREME)<br><span style="color:#00FF66; font-size:0.80rem; font-weight:800;">powered by 🩵 SmartEarthFamily für ein besseres Leben in Frieden und Freiheit</span>
     </div>
+    <button class="btn-dharma-trigger" onclick="openDharmaMandalaModal()" style="background: linear-gradient(135deg, #FFD700, #B8860B); color: #000; border: none; padding: 5px 14px; border-radius: 10px; font-weight: 950; font-size: 0.78rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 0 15px rgba(255, 215, 0, 0.4); text-transform: uppercase; margin-right:8px;">☸️ DHARMA MANDALA</button><button onclick="shrinkNomoRevealMatrix()" style="background:rgba(255,215,0,0.15); color:#FFD700; border:1px solid #FFD700; border-radius:10px; padding:5px 14px; font-size:0.75rem; font-weight:900; cursor:pointer; transition:all 0.3s ease;">
+      ✕ MINIMIEREN
+    </button>
+  </div>
+  <div style="color:#DDD; font-size:0.85rem; line-height:1.5; margin-bottom:20px; background:rgba(212,175,55,0.1); padding:12px; border-radius:14px; border:1px solid rgba(212,175,55,0.35);">
+    Sie nutzen diese Anwendung aktuell außerhalb der NomoApp (am PC / Standalone Browser).<br>
+    <strong>Der sicherste, dezentrale Weg ist der Direktzugriff innerhalb der NomoApp Wallet!</strong><br>
+    Nutzen Sie die 4 dezentralen Zugänge (Dirk Mentor, Master WebOn, Nomo.ID QR-Login & BDR Biometrie ScanToLogin) oder verbinden Sie Ihre MetaMask Wallet:
   </div>
 
-  <!-- 🌐🛡️ 4S NOMO REVEAL & TELEMETRIE CONTAINER (EXPANDED) -->
-  <div id="pc-nomo-reveal-matrix-container" class="spcl-sys-telemetry-box" style="display:block; margin-bottom:16px;">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; border-bottom:1px solid rgba(212,175,55,0.3); padding-bottom:8px; flex-wrap:wrap; gap:8px;">
+  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:16px; margin-top:15px;">
+    
+    <!-- KARTE 1: MENTOR DIRK MESSENGER INVITATION & NOMOAPP DOWNLOAD -->
+    <div style="background:rgba(0,0,0,0.85); border:1.5px solid #00BFFF; border-radius:20px; padding:18px; text-align:center; box-shadow:0 0 20px rgba(0,191,255,0.25); display:flex; flex-direction:column; justify-content:space-between; gap:12px;">
       <div>
-        <div style="color: var(--sewwwes-gold); font-weight: 950; font-size: 0.88rem; letter-spacing: 0.5px;">
-          🌐🛡️ SeWWWeS.NET 🌎SmartEarthWorld🔍 SPCL CONTROL LABELING | SIGNAL VERIFIED (v1.3.434 SUPREME)
+        <div style="color:#00BFFF; font-size:0.95rem; font-weight:950; text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px;">
+          👤 1. MENTOR DIRK & NOMOAPP
         </div>
-        <div style="color: #00FF66; font-size: 0.80rem; font-weight: 800; margin-top: 2px;">
-          powered by 🩵 SmartEarthFamily für ein besseres Leben in Frieden und Freiheit
+        <div style="color:#DDD; font-size:0.78rem; line-height:1.4; margin-bottom:12px; min-height:48px;">
+          <strong>SeWWWeS SmartEarthFamily Dirk lädt Sie ein!</strong><br>
+          <span style="color:#aaa;">1. Scan / Klick: NomoApp Download & Landingpage<br>2. Scan in NomoApp: Direkter P2P Messenger Chat</span>
         </div>
       </div>
-      <div style="display:flex; align-items:center; gap:8px;">
-        <button class="btn-dharma-trigger" onclick="openDharmaMandalaModal()" style="background: linear-gradient(135deg, #FFD700, #B8860B); color: #000; border: none; padding: 6px 14px; border-radius: 10px; font-weight: 950; font-size: 0.80rem; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 0 15px rgba(255, 215, 0, 0.4); text-transform: uppercase;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v6M12 15v6M3 12h6M15 12h6M5.6 5.6l4.3 4.3M14.1 14.1l4.3 4.3M18.4 5.6l-4.3 4.3M9.9 14.1l-4.3 4.3"/></svg>
-          <span>☸️ DHARMA MANDALA</span>
-        </button>
-        <div id="engine-status-badge" class="engine-badge">
-          💻 ENGINE: WIRD ERKANNT...
-        </div>
-        <button onclick="shrinkNomoRevealMatrix()" style="background:rgba(255,215,0,0.15); color:#FFD700; border:1px solid #FFD700; border-radius:8px; padding:5px 12px; font-size:0.75rem; font-weight:900; cursor:pointer;">
-          ✕ MINIMIEREN
-        </button>
+
+      <!-- HIGH-CONTRAST ISO-STANDARD PNG QR CODE -->
+      <div style="background:#FFFFFF; padding:12px; border-radius:16px; margin:0 auto; width:fit-content; border:2px solid #00BFFF; box-shadow:0 0 15px rgba(0,191,255,0.3);">
+        <img src="data:image/png;base64,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" alt="MyQR.NFT Mentor Dirk" style="width:100%; max-width:180px; height:auto; display:block; margin:0 auto; border-radius:8px;">
       </div>
-    </div>
 
-    <div id="sys-diag-line" style="color: #A0AABF; font-size: 0.72rem; padding-top: 2px;">
-      [SYSTEM INIT] Engine-Abtastung gestartet... Kamera & Biometrie-Bereitschaft hergestellt.
-    </div>
-
-    <!-- QUICK ACTION MATRIX IN EXPANDED REVEAL -->
-    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-top:10px; border-top:1px dashed rgba(212,175,55,0.25); padding-top:8px;">
-      <a href="https://sewwwes.net" target="_blank" rel="noopener" onclick="openMasterGatewayLink(event)" style="color:#FFD700; font-weight:900; font-size:0.78rem; text-decoration:none; display:inline-flex; align-items:center; gap:4px;">
-        🏛️ 1. MASTER GATEWAY (sewwwes.net)
+      <a href="https://nomo.id/@0x97ed03f89b5a178abba87bd1af8df4fafe02bd1d" target="_blank" style="display:inline-block; width:100%; background:linear-gradient(135deg, #00BFFF, #0088cc); color:#000; font-weight:950; font-size:0.8rem; padding:10px; border-radius:12px; text-decoration:none; text-transform:uppercase;">
+        📲 NOMO.ID / DIRK INVITATION
       </a>
-      <span onclick="openDharmaMandalaModal()" style="color:#00f2fe; font-weight:900; font-size:0.78rem; cursor:pointer; display:inline-flex; align-items:center; gap:4px;">
-        ☸️ 2. DHARMA MANDALA WUNDER
-      </span>
-      <span onclick="downloadDiagnosticReport()" style="color:#00FF66; font-weight:900; font-size:0.78rem; cursor:pointer; display:inline-flex; align-items:center; gap:4px;">
-        📥 3. DIAGNOSTIK REPORT
-      </span>
-      <span onclick="requestOfficialScanMeSeal('SUPPORT')" style="color:#FF69B4; font-weight:900; font-size:0.78rem; cursor:pointer; display:inline-flex; align-items:center; gap:4px;">
-        📞 4. MENTOR DIRK SUPPORT
-      </span>
     </div>
-  </div>
 
-  <!-- 🏛️ MASTER GATEWAY LINK BRÜCKE -->
-  
+    <!-- KARTE 2: WEBON DEEP-LINK & DIRECT LAUNCH -->
+    <div style="background:rgba(0,0,0,0.85); border:1.5px solid #00FF66; border-radius:20px; padding:18px; text-align:center; box-shadow:0 0 20px rgba(0,255,102,0.25); display:flex; flex-direction:column; justify-content:space-between; gap:12px;">
+      <div>
+        <div style="color:#00FF66; font-size:0.95rem; font-weight:950; text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px;">
+          🌐 2. MASTER WEBON (NET.SEWWWES.NET)
+        </div>
+        <div style="color:#DDD; font-size:0.78rem; line-height:1.4; margin-bottom:12px; min-height:48px;">
+          <strong>Souveräner WebOn Direktstart!</strong><br>
+          <span style="color:#aaa;">Scannen Sie diesen MyQR.NFT Code mit der NomoApp-Kamera für direktes Launching in Ihrer Wallet.</span>
+        </div>
+      </div>
+
+      <!-- HIGH-CONTRAST ISO-STANDARD PNG QR CODE -->
+      <div style="background:#FFFFFF; padding:12px; border-radius:16px; margin:0 auto; width:fit-content; border:2px solid #00FF66; box-shadow:0 0 15px rgba(0,255,102,0.3);">
+        <img src="data:image/png;base64,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" alt="MyQR.NFT WebOn" style="width:100%; max-width:180px; height:auto; display:block; margin:0 auto; border-radius:8px;">
+      </div>
+
+      <a href="https://nomo.app/webon/sewwwes.net/" target="_blank" style="display:inline-block; width:100%; background:linear-gradient(135deg, #00FF66, #00B359); color:#000; font-weight:950; font-size:0.8rem; padding:10px; border-radius:12px; text-decoration:none; text-transform:uppercase;">
+        🌐 LAUNCH SEWWWES.NET IN NOMO
+      </a>
+    </div>
+
+    <!-- KARTE 3: SOUVERÄNER NOMO.ID QR-LOGIN (PC TERMINAL FREISCHALTUNG) -->
+    <div style="background:rgba(0,0,0,0.85); border:1.5px solid #FFD700; border-radius:20px; padding:16px; text-align:center; box-shadow:0 0 20px rgba(255,215,0,0.25); display:flex; flex-direction:column; justify-content:space-between; gap:12px;">
+      <div>
+        <div style="color:#FFD700; font-size:0.92rem; font-weight:950; text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px;">
+          🔑 3. SOUVERÄNER NOMO.ID QR-LOGIN
+        </div>
+        <div style="color:#DDD; font-size:0.75rem; line-height:1.4; margin-bottom:12px; min-height:46px;">
+          <strong>Dezentrale PC-Session Freischaltung!</strong><br>
+          <span style="color:#aaa;">Scannen Sie diesen Nomo.ID Code mit der NomoApp-Kamera für sofortige PC-Legitimation.</span>
+        </div>
+      </div>
+
+      <!-- DYNAMISCHER HIGH-CONTRAST QR CODE CONTAINER -->
+      <div id="nomo-id-qr-box" style="background:#FFFFFF; padding:10px; border-radius:16px; margin:0 auto; width:fit-content; border:2px solid #FFD700; box-shadow:0 0 15px rgba(255,215,0,0.3); display:flex; align-items:center; justify-content:center; width:180px; height:180px;">
+        <!-- Dynamisch gerendert via JS -->
+      </div>
+
+      <div>
+        <div id="nomo-id-login-status" style="font-size:0.70rem; color:#FFD700; font-weight:bold; margin-bottom:6px; font-family:monospace;">
+          ⏳ Challenge: <span id="nomo-challenge-id-tag">NOMO_ID_8001002026</span>
+        </div>
+        <button onclick="executeNomoIdAuthLogin()" style="width:100%; background:linear-gradient(135deg, #FFD700, #D4AF37); color:#000; border:none; padding:10px; border-radius:10px; font-weight:950; font-size:0.75rem; cursor:pointer; text-transform:uppercase;">
+          🔑 NOMO.ID SESSION ANMELDEN
+        </button>
+      </div>
+    </div>
+
+
+    <!-- KARTE 4: SOUVERÄNER BDR BIOMETRIE SCAN-TO-LOGIN (DEZENTRALE ANMELDUNG) -->
+    <div style="background:rgba(0,0,0,0.85); border:1.5px solid #00FF66; border-radius:20px; padding:16px; text-align:center; box-shadow:0 0 20px rgba(0,255,102,0.25); display:flex; flex-direction:column; justify-content:space-between; gap:12px;">
+      <div>
+        <div style="color:#00FF66; font-size:0.92rem; font-weight:950; text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px;">
+          👤 4. BDR BIOMETRIE ScanToLogin
+        </div>
+        <div style="color:#DDD; font-size:0.75rem; line-height:1.4; margin-bottom:12px; min-height:46px;">
+          <strong>Echter Wahrhaftiger Mensch Instant-Legitimation!</strong><br>
+          <span style="color:#aaa;">Souveräner 128-D Live-Gesichtsscan & Proof-of-Life Anmelde-Sprint über den BDR Kamera-Scanner.</span>
+        </div>
+      </div>
+
+      <!-- HIGH-CONTRAST BIOMETRIC SCANNER VISUAL BADGE -->
+      <div style="background:rgba(0,255,102,0.06); padding:14px; border-radius:16px; margin:0 auto; width:100%; border:2px dashed #00FF66; box-shadow:0 0 15px rgba(0,255,102,0.3); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px;">
+        <span style="font-size:2.8rem; filter:drop-shadow(0 0 12px #00FF66); animation: pulse 2s infinite ease-in-out;">👤</span>
+        <div style="font-size:0.72rem; color:#00FF66; font-weight:900; font-family:monospace; letter-spacing:1px; text-transform:uppercase;">
+          🟢 BDR BIOMETRIE SCANNER BEREIT
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:0.70rem; color:#00FF66; font-weight:bold; margin-bottom:6px; font-family:monospace;">
+          ⚡ Zero-Server • 128-D On-Device Match
+        </div>
+        <button onclick="openSovereignCameraScanner(); if(typeof switchBdrScanMode==='function') switchBdrScanMode('biometric');" style="width:100%; background:linear-gradient(135deg, #00FF66, #00B359); color:#000; border:none; padding:10px; border-radius:10px; font-weight:950; font-size:0.75rem; cursor:pointer; text-transform:uppercase; box-shadow:0 0 15px rgba(0,255,102,0.35);">
+          👤 4. BDR ScanToLogin STARTEN
+        </button>
+      </div>
+    </div>
+
+
+
+  </div>
+</div>
 
   <!-- 📷 HAUPT BDR SCANNER COCKPIT (1:1 MASTER LOOK) -->
   <div class="bdr-scanner-card">
@@ -517,34 +570,85 @@
     window.shrinkNomoRevealMatrix = shrinkNomoRevealMatrix;
     window.expandNomoRevealMatrix = expandNomoRevealMatrix;
 
-    function detectEngineEnvironment() {
-      const badge = document.getElementById('engine-status-badge');
-      const shrunkBadge = document.getElementById('shrunk-engine-badge');
-      const diag = document.getElementById('sys-diag-line');
-      
-      let modeText = "💻 ENGINE: PC STANDALONE BROWSER";
-      if (typeof window.isRealNomoApp === "function" && window.isRealNomoApp()) {
-        modeText = "📱 ENGINE: NOMO NATIVE CONTAINER";
-      } else if (window.ethereum && window.ethereum.isMetaMask) {
-        modeText = "💻 ENGINE: METAMASK WEB3 BROWSER";
-      } else if (/Android|iPhone|iPad/i.test(navigator.userAgent)) {
-        modeText = "📱 ENGINE: MOBILE WEB BROWSER";
-      }
+    var revealTimerSoft = null;
+  var revealTimerShrink = null;
+  var userInteractedReveal = false;
 
-      if (badge) badge.innerText = modeText;
-      if (shrunkBadge) shrunkBadge.innerText = modeText;
-      if (diag) diag.innerText = `[TELEMETRIE ONLINE] ${modeText} aktiv. Kamera-Streams & Canvas-Engine bereit.`;
+  function shrinkNomoRevealMatrix() {
+    userInteractedReveal = true;
+    if (revealTimerSoft) clearTimeout(revealTimerSoft);
+    if (revealTimerShrink) clearTimeout(revealTimerShrink);
+    const pcRevealContainer = document.getElementById("pc-nomo-reveal-matrix-container");
+    const shrunkBadge = document.getElementById("pc-reveal-shrunk-badge");
+    if (pcRevealContainer) pcRevealContainer.style.display = "none";
+    if (shrunkBadge) shrunkBadge.style.display = "block";
+    if (typeof logDiagnostics === "function") logDiagnostics("🔑 4S Nomo Reveal Matrix minimiert -> Gold Badge aktiv.");
+  }
 
-      // Soft auto-collapse 4S Nomo Reveal after 5s for clean camera focus
+  function expandNomoRevealMatrix() {
+    userInteractedReveal = true;
+    if (revealTimerSoft) clearTimeout(revealTimerSoft);
+    if (revealTimerShrink) clearTimeout(revealTimerShrink);
+    const pcRevealContainer = document.getElementById("pc-nomo-reveal-matrix-container");
+    const shrunkBadge = document.getElementById("pc-reveal-shrunk-badge");
+    if (pcRevealContainer) pcRevealContainer.style.display = "block";
+    if (shrunkBadge) shrunkBadge.style.display = "none";
+    if (typeof logDiagnostics === "function") logDiagnostics("📂 4S Nomo Reveal Matrix manuell geöffnet -> Bleibt geöffnet.");
+  }
+
+  window.shrinkNomoRevealMatrix = shrinkNomoRevealMatrix;
+  window.expandNomoRevealMatrix = expandNomoRevealMatrix;
+
+  function apply4SNomoRevealMode() {
+    const isNomoApp = (window.isRealNomoApp ? window.isRealNomoApp() : (window.nomo || (navigator.userAgent && navigator.userAgent.toLowerCase().includes("nomo"))));
+    const pcRevealContainer = document.getElementById("pc-nomo-reveal-matrix-container");
+    const nomoIndicator = document.getElementById("nomo-wallet-status-indicator");
+    const metamaskContainer = document.getElementById("metamask-connect-container");
+    const shrunkBadge = document.getElementById("pc-reveal-shrunk-badge");
+
+    if (isNomoApp) {
+      if (pcRevealContainer) pcRevealContainer.style.display = "none";
+      if (shrunkBadge) shrunkBadge.style.display = "none";
+      if (nomoIndicator) nomoIndicator.style.display = "block";
+      if (metamaskContainer) metamaskContainer.style.display = "none";
+      if (typeof logDiagnostics === "function") logDiagnostics("📱 NOMOAPP NATIVE CONTAINER ERKANNT -> PC Reveal geschlossen, 0.3s Auto-Connect aktiv.");
+    } else {
+      if (nomoIndicator) nomoIndicator.style.display = "none";
+      if (metamaskContainer) metamaskContainer.style.display = "flex";
       if (!userInteractedReveal) {
-        revealTimerShrink = setTimeout(function() {
+        if (pcRevealContainer) pcRevealContainer.style.display = "none";
+        if (shrunkBadge) shrunkBadge.style.display = "none";
+        if (typeof logDiagnostics === "function") logDiagnostics("💻 STANDALONE PC BROWSER -> PHASE 1: 6s Freie Cockpit-Sicht aktiv...");
+        if (revealTimerSoft) clearTimeout(revealTimerSoft);
+        revealTimerSoft = setTimeout(function() {
           if (!userInteractedReveal) {
-            shrinkNomoRevealMatrix();
-            userInteractedReveal = false;
+            if (pcRevealContainer) pcRevealContainer.style.display = "block";
+            if (shrunkBadge) shrunkBadge.style.display = "none";
+            if (typeof logDiagnostics === "function") logDiagnostics("✨ PHASE 2: 4S Nomo Reveal Matrix nach 6s Soft-Show eingeblendet.");
+            if (revealTimerShrink) clearTimeout(revealTimerShrink);
+            revealTimerShrink = setTimeout(function() {
+              if (!userInteractedReveal) {
+                if (pcRevealContainer) pcRevealContainer.style.display = "none";
+                if (shrunkBadge) shrunkBadge.style.display = "block";
+                if (typeof logDiagnostics === "function") logDiagnostics("🛸 PHASE 3: Auto-Shrink nach 10s Sichtbarkeit -> Floating Gold Badge aktiv.");
+              }
+            }, 10000);
           }
-        }, 5000);
+        }, 6000);
       }
     }
+  }
+
+  window.addEventListener('DOMContentLoaded', apply4SNomoRevealMode);
+  setTimeout(apply4SNomoRevealMode, 100);
+
+  setTimeout(apply4SNomoRevealMode, 500);
+  setTimeout(apply4SNomoRevealMode, 1500);
+  setTimeout(apply4SNomoRevealMode, 4000);
+</script>
+
+<script>
+window.detectEngineEnvironment = function() { var ua = navigator.userAgent || ""; var isNomo = (typeof window.isRealNomoApp === "function" ? window.isRealNomoApp() : (/Nomo|WebOn/i.test(ua))); var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua); if (isNomo) { window.currentEngineMode = "NomoApp"; } else if (isMobile) { window.currentEngineMode = "MobileBrowser"; } else { window.currentEngineMode = "PCDesktop"; } var engineBadge = document.getElementById("sewwwes-engine-badge"); if (engineBadge) { if (window.currentEngineMode === "PCDesktop") { engineBadge.innerHTML = "💻 ENGINE: PC DESKTOP WEB3 (BRAVE / METAMASK / TRUST / NOMO)"; engineBadge.style.background = "rgba(0, 242, 254, 0.18)"; engineBadge.style.color = "#00f2fe"; engineBadge.style.border = "1px solid #00f2fe"; } else if (window.currentEngineMode === "NomoApp") { engineBadge.innerHTML = "📱 ENGINE: NOMOAPP WEBON"; engineBadge.style.background = "rgba(255, 215, 0, 0.18)"; engineBadge.style.color = "#ffd700"; engineBadge.style.border = "1px solid #ffd700"; } else { engineBadge.innerHTML = "📱 ENGINE: MOBILE BROWSER"; engineBadge.style.background = "rgba(79, 172, 254, 0.18)"; engineBadge.style.color = "#4facfe"; engineBadge.style.border = "1px solid #4facfe"; } } };
 
     // GATEWAY LINK BRÜCKE
     function openMasterGatewayLink(e) {
