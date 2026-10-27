@@ -1,8 +1,8 @@
 {
   "nomo_manifest_version": "1.0.0",
   "webon_id": "net.sewwwes.scan",
-  "webon_name": "SCAN.SeWWWeS.NET | BDR Kamera & Biometrie Scanner",
-  "webon_version": "1.0.20",
+  "webon_name": "SCAN.SeWWWeS.NET | BDR Kamera & Biometrie Scanner v1.0.21 SUPREME",
+  "webon_version": "1.0.21",
   "webon_url": "https://scan.sewwwes.net",
   "permissions": [
     "CAMERA",
