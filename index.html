@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>SCAN.SeWWWeS.NET | BDR Kamera & Biometrie Scanner v1.0.31 SUPREME</title>
+  <title>SCAN.SeWWWeS.NET | BDR Kamera & Biometrie Scanner v1.0.32 SUPREME</title>
   <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
   <style>
     :root {
@@ -324,7 +324,7 @@
     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
       <div style="text-align:left;">
         <div style="color: #D4AF37; font-weight: 950; font-size: 0.90rem; letter-spacing: 0.5px;">
-          🌐🛡️ SeWWWeS.NET 🌎SmartEarthWorld🔍 SPCL CONTROL LABELING | SIGNAL VERIFIED (v1.0.31 SUPREME)
+          🌐🛡️ SeWWWeS.NET 🌎SmartEarthWorld🔍 SPCL CONTROL LABELING | SIGNAL VERIFIED (v1.0.32 SUPREME)
         </div>
         <div style="color: #00FF66; font-size: 0.80rem; font-weight: 800; margin-top: 3px;">
           powered by 🩵 SmartEarthFamily für ein besseres Leben in Frieden und Freiheit
@@ -340,7 +340,7 @@
         </button>
       </div>
     </div>
-    <div id="sys-diag-line" style="color: #A0AABF; margin-top: 8px; font-size: 0.72rem; border-top: 1px solid rgba(212,175,55,0.2); padding-top: 6px; text-align:left;">
+    <div id="sys-diag-line-reveal" style="color: #A0AABF; margin-top: 8px; font-size: 0.72rem; border-top: 1px solid rgba(212,175,55,0.2); padding-top: 6px; text-align:left;">
       [SYSTEM INIT] Engine-Abtastung gestartet... Kamera & Biometrie-Bereitschaft hergestellt.
     </div>
   </div>
@@ -529,6 +529,23 @@
       </div>
     </div>
 
+  </div>
+
+  
+  <!-- 📡 DISKRETE SYSTEM-DIAGNOSTIK & LIVE LOG BAR -->
+  <div id="bdr-main-diag-bar" style="background:rgba(10,14,24,0.95); border:1.5px solid rgba(212,175,55,0.35); border-radius:14px; padding:10px 14px; margin:16px 0 8px 0; font-family:'Roboto Mono',monospace; box-shadow:0 0 15px rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+    <div style="flex:1; text-align:left; min-width:240px;">
+      <div style="color:#D4AF37; font-size:0.75rem; font-weight:950; letter-spacing:0.5px; margin-bottom:3px; display:flex; align-items:center; gap:6px;">
+        <span>📡 SYSTEM DIAGNOSTIK & LOG</span>
+        <span style="color:#00FF66; font-size:0.70rem; font-weight:800;">(v1.0.32 SUPREME)</span>
+      </div>
+      <div id="sys-diag-line" style="color:#A0AABF; font-size:0.72rem; word-break:break-word; line-height:1.4;">
+        [SYSTEM INIT] Engine-Abtastung gestartet... Kamera-Bereitschaft wird hergestellt.
+      </div>
+    </div>
+    <button onclick="copyDiagnosticsLog()" title="Kopiert das vollständige Diagnostik-Log in die Zwischenablage" style="background:linear-gradient(135deg, #00f2fe, #4facfe); color:#000; border:none; padding:6px 14px; border-radius:10px; font-weight:950; font-size:0.75rem; cursor:pointer; box-shadow:0 0 12px rgba(0,242,254,0.35); white-space:nowrap; text-transform:uppercase;">
+      📋 LOG KOPIEREN
+    </button>
   </div>
 
   <div class="footer-copy">
@@ -765,7 +782,7 @@ window.window.detectEngineEnvironment = function() {
       if (!video) return;
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
         const diag = document.getElementById("sys-diag-line");
-        if (diag) diag.innerText = "⚠️ Kamera-Zugriff im Browser nicht verfügbar. Drag & Drop oder Nomo Native Scan nutzen.";
+        logDiagnostics("⚠️ Kamera-Zugriff im Browser nicht verfügbar. Drag & Drop oder Nomo Native Scan nutzen.");
         return;
       }
 
@@ -798,10 +815,10 @@ window.window.detectEngineEnvironment = function() {
         } catch(e) {}
 
         const diag = document.getElementById("sys-diag-line");
-        if (diag) diag.innerText = "🟢 Kamera-Stream aktiv (" + mode + "). BDR Live-Scan & QR bereit.";
+        logDiagnostics("🟢 Kamera-Stream aktiv (" + mode + "). BDR Live-Scan & QR bereit.");
       }).catch(function(err) {
         const diag = document.getElementById("sys-diag-line");
-        if (diag) diag.innerText = "⚠️ Hinweis Kamera-Berechtigung: " + (err.message || err) + ". Bitte Kamera freigeben oder Nomo Native Scan nutzen.";
+        logDiagnostics("⚠️ Hinweis Kamera-Berechtigung: " + (err.message || err) + ". Bitte Kamera freigeben oder Nomo Native Scan nutzen.");
       });
     }
 
@@ -832,7 +849,7 @@ window.window.detectEngineEnvironment = function() {
         recognition.maxAlternatives = 1;
         
         const diag = document.getElementById('sys-diag-line');
-        if (diag) diag.innerText = "🎙️ Bitte jetzt sprechen... SID, Wallet oder Suchbegriff nennen.";
+        logDiagnostics("🎙️ Bitte jetzt sprechen... SID, Wallet oder Suchbegriff nennen.");
 
         recognition.onresult = function(event) {
           const spokenText = event.results[0][0].transcript;
@@ -1155,6 +1172,64 @@ window.window.detectEngineEnvironment = function() {
     }
 
     // INITIALIZATION
+    
+    window.latestDiagnosticsText = "";
+
+    window.logDiagnostics = function(msg) {
+      const timestamp = new Date().toLocaleTimeString();
+      const line = "[" + timestamp + "] " + msg;
+      window.latestDiagnosticsText = (window.latestDiagnosticsText || "") + line + "\n";
+      
+      const d1 = document.getElementById("sys-diag-line");
+      if (d1) d1.innerText = line;
+      const d2 = document.getElementById("sys-diag-line-reveal");
+      if (d2) d2.innerText = line;
+    };
+
+    window.copyDiagnosticsLog = function() {
+      const timeStr = new Date().toLocaleString();
+      const engine = window.currentEngineMode || "Abtastung...";
+      const userAddr = window.userAddress || "Nicht gekoppelt";
+      const userSid = window.userSID || "Nicht gekoppelt";
+      const lastLog = window.latestDiagnosticsText || (document.getElementById("sys-diag-line") ? document.getElementById("sys-diag-line").innerText : "");
+      
+      const fullReport = "=== SeWWWeS.NET BDR SCANNER DIAGNOSTIK REPORT (v1.0.32 SUPREME) ===\n" +
+                         "Datum/Zeit: " + timeStr + "\n" +
+                         "WebOn URL: https://scan.sewwwes.net\n" +
+                         "Engine Mode: " + engine + "\n" +
+                         "Wallet Address: " + userAddr + "\n" +
+                         "MyDePIN SID: " + userSid + "\n" +
+                         "UserAgent: " + navigator.userAgent + "\n" +
+                         "Display Dimensions: " + window.innerWidth + "x" + window.innerHeight + "\n\n" +
+                         "[SYSTEM LOG ENTRIES]\n" + lastLog + "\n" +
+                         "=================================================";
+      
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(fullReport).then(() => {
+          alert("🟢 System-Diagnostik Log erfolgreich in die Zwischenablage kopiert!\nSie können diesen Report direkt in den Support-Chat einfügen.");
+        }).catch(() => {
+          fallbackCopyText(fullReport);
+        });
+      } else {
+        fallbackCopyText(fullReport);
+      }
+    };
+
+    function fallbackCopyText(text) {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand("copy");
+        alert("🟢 System-Diagnostik Log erfolgreich in die Zwischenablage kopiert!");
+      } catch(e) {
+        alert("⚠️ Kopieren fehlgeschlagen. Report:\n\n" + text.substring(0, 300));
+      }
+      document.body.removeChild(ta);
+    }
+
+
     document.addEventListener('DOMContentLoaded', () => {
       detectEngineEnvironment();
       startCameraStream('environment');
@@ -1207,11 +1282,11 @@ window.requestOfficialScanMeSeal = requestOfficialScanMeSeal;
 
 function downloadDiagnosticReport() {
   window.downloadDiagnosticReport = downloadDiagnosticReport;
-  var reportText = 'BDR SCANNER DIAGNOSTIC REPORT (v1.0.31) ' + new Date().toISOString();
+  var reportText = 'BDR SCANNER DIAGNOSTIC REPORT (v1.0.32) ' + new Date().toISOString();
   var blob = new Blob([reportText], { type: 'text/plain' });
   var a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'BDR_Diagnostic_v1.0.31.txt';
+  a.download = 'BDR_Diagnostic_v1.0.32.txt';
   a.click();
 }
 window.downloadDiagnosticReport = downloadDiagnosticReport;
