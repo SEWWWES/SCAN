@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>SCAN.SeWWWeS.NET | BDR Kamera & Biometrie Scanner v1.0.30 SUPREME</title>
+  <title>SCAN.SeWWWeS.NET | BDR Kamera & Biometrie Scanner v1.0.31 SUPREME</title>
   <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
   <style>
     :root {
@@ -324,7 +324,7 @@
     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
       <div style="text-align:left;">
         <div style="color: #D4AF37; font-weight: 950; font-size: 0.90rem; letter-spacing: 0.5px;">
-          🌐🛡️ SeWWWeS.NET 🌎SmartEarthWorld🔍 SPCL CONTROL LABELING | SIGNAL VERIFIED (v1.3.434 SUPREME)
+          🌐🛡️ SeWWWeS.NET 🌎SmartEarthWorld🔍 SPCL CONTROL LABELING | SIGNAL VERIFIED (v1.0.31 SUPREME)
         </div>
         <div style="color: #00FF66; font-size: 0.80rem; font-weight: 800; margin-top: 3px;">
           powered by 🩵 SmartEarthFamily für ein besseres Leben in Frieden und Freiheit
@@ -686,7 +686,35 @@
 </script>
 
 <script>
-window.detectEngineEnvironment = function() { var ua = navigator.userAgent || ""; var isNomo = (typeof window.isRealNomoApp === "function" ? window.isRealNomoApp() : (/Nomo|WebOn/i.test(ua))); var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua); if (isNomo) { window.currentEngineMode = "NomoApp"; } else if (isMobile) { window.currentEngineMode = "MobileBrowser"; } else { window.currentEngineMode = "PCDesktop"; } var engineBadge = document.getElementById("sewwwes-engine-badge"); if (engineBadge) { if (window.currentEngineMode === "PCDesktop") { engineBadge.innerHTML = "💻 ENGINE: PC DESKTOP WEB3 (BRAVE / METAMASK / TRUST / NOMO)"; engineBadge.style.background = "rgba(0, 242, 254, 0.18)"; engineBadge.style.color = "#00f2fe"; engineBadge.style.border = "1px solid #00f2fe"; } else if (window.currentEngineMode === "NomoApp") { engineBadge.innerHTML = "📱 ENGINE: NOMOAPP WEBON"; engineBadge.style.background = "rgba(255, 215, 0, 0.18)"; engineBadge.style.color = "#ffd700"; engineBadge.style.border = "1px solid #ffd700"; } else { engineBadge.innerHTML = "📱 ENGINE: MOBILE BROWSER"; engineBadge.style.background = "rgba(79, 172, 254, 0.18)"; engineBadge.style.color = "#4facfe"; engineBadge.style.border = "1px solid #4facfe"; } } };
+window.window.detectEngineEnvironment = function() {
+      var ua = navigator.userAgent || "";
+      var isNomo = (typeof window.isRealNomoApp === "function" ? window.isRealNomoApp() : (/Nomo|WebOn/i.test(ua)));
+      var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+      if (isNomo) { window.currentEngineMode = "NomoApp"; }
+      else if (isMobile) { window.currentEngineMode = "MobileBrowser"; }
+      else { window.currentEngineMode = "PCDesktop"; }
+      
+      var badges = [document.getElementById("sewwwes-engine-badge"), document.getElementById("engine-status-badge")];
+      badges.forEach(function(b) {
+        if (!b) return;
+        if (window.currentEngineMode === "PCDesktop") {
+          b.innerHTML = "💻 ENGINE: PC DESKTOP WEB3 (METAMASK / BRAVE / TRUST)";
+          b.style.background = "rgba(0, 242, 254, 0.18)";
+          b.style.color = "#00f2fe";
+          b.style.border = "1px solid #00f2fe";
+        } else if (window.currentEngineMode === "NomoApp") {
+          b.innerHTML = "📱 ENGINE: NOMOAPP NATIVE CONTAINER";
+          b.style.background = "rgba(255, 215, 0, 0.18)";
+          b.style.color = "#FFD700";
+          b.style.border = "1px solid #FFD700";
+        } else {
+          b.innerHTML = "📱 ENGINE: MOBILE BROWSER (SMARTPHONE / TABLET)";
+          b.style.background = "rgba(0, 255, 102, 0.18)";
+          b.style.color = "#00FF66";
+          b.style.border = "1px solid #00FF66";
+        }
+      });
+    };
 
     // GATEWAY LINK BRÜCKE
     function openMasterGatewayLink(e) {
@@ -731,41 +759,50 @@ window.detectEngineEnvironment = function() { var ua = navigator.userAgent || ""
     // CAMERA STREAM CONTROLLER
     function startCameraStream(facingMode) {
       if (videoStream) {
-        videoStream.getTracks().forEach(track => track.stop());
+        try { videoStream.getTracks().forEach(track => track.stop()); } catch(e){}
       }
-      const video = document.getElementById('bdr-video-feed');
-      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return;
+      const video = document.getElementById("bdr-video-feed");
+      if (!video) return;
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        const diag = document.getElementById("sys-diag-line");
+        if (diag) diag.innerText = "⚠️ Kamera-Zugriff im Browser nicht verfügbar. Drag & Drop oder Nomo Native Scan nutzen.";
+        return;
+      }
 
-      // HD Constraints with Continuous Autofocus for Smartphone Back Cameras
-      const constraints = {
-        video: {
-          facingMode: { ideal: facingMode || "environment" },
-          width: { ideal: 1920, min: 1280 },
-          height: { ideal: 1080, min: 720 },
-          advanced: [
-            { focusMode: "continuous" },
-            { zoom: 1.0 }
-          ]
-        }
-      };
+      const mode = facingMode || "environment";
 
-      navigator.mediaDevices.getUserMedia(constraints)
-        .catch(function() {
-          return navigator.mediaDevices.getUserMedia({
-            video: { facingMode: facingMode || "environment", width: { ideal: 1280 }, height: { ideal: 720 } }
-          });
-        })
-        .then(function(stream) {
-          videoStream = stream;
-          if (video) {
-            video.srcObject = stream;
-            video.play().catch(function(){});
-          }
-        })
-        .catch(function(err) {
-          const diag = document.getElementById('sys-diag-line');
-          if (diag) diag.innerText = "⚠️ Hinweis Kamera: " + (err.message || err) + ". Drag & Drop oder Nomo Native Scan nutzen.";
+      // Tier 1: HD Ideal (No strict min constraint to prevent OverconstrainedError on webcams)
+      navigator.mediaDevices.getUserMedia({
+        video: { facingMode: { ideal: mode }, width: { ideal: 1920 }, height: { ideal: 1080 } }
+      }).catch(function() {
+        // Tier 2: SD Ideal
+        return navigator.mediaDevices.getUserMedia({
+          video: { facingMode: mode }
         });
+      }).catch(function() {
+        // Tier 3: Basic Video
+        return navigator.mediaDevices.getUserMedia({ video: true });
+      }).then(function(stream) {
+        videoStream = stream;
+        video.muted = true;
+        video.setAttribute("playsinline", "true");
+        video.setAttribute("autoplay", "true");
+        video.srcObject = stream;
+        video.play().catch(function(){});
+
+        try {
+          const track = stream.getVideoTracks()[0];
+          if (track && typeof track.applyConstraints === "function") {
+            track.applyConstraints({ advanced: [{ focusMode: "continuous" }] }).catch(function(){});
+          }
+        } catch(e) {}
+
+        const diag = document.getElementById("sys-diag-line");
+        if (diag) diag.innerText = "🟢 Kamera-Stream aktiv (" + mode + "). BDR Live-Scan & QR bereit.";
+      }).catch(function(err) {
+        const diag = document.getElementById("sys-diag-line");
+        if (diag) diag.innerText = "⚠️ Hinweis Kamera-Berechtigung: " + (err.message || err) + ". Bitte Kamera freigeben oder Nomo Native Scan nutzen.";
+      });
     }
 
     function triggerNomoNativeQrScan() {
@@ -1170,11 +1207,11 @@ window.requestOfficialScanMeSeal = requestOfficialScanMeSeal;
 
 function downloadDiagnosticReport() {
   window.downloadDiagnosticReport = downloadDiagnosticReport;
-  var reportText = 'BDR SCANNER DIAGNOSTIC REPORT (v1.0.30) ' + new Date().toISOString();
+  var reportText = 'BDR SCANNER DIAGNOSTIC REPORT (v1.0.31) ' + new Date().toISOString();
   var blob = new Blob([reportText], { type: 'text/plain' });
   var a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'BDR_Diagnostic_v1.0.30.txt';
+  a.download = 'BDR_Diagnostic_v1.0.31.txt';
   a.click();
 }
 window.downloadDiagnosticReport = downloadDiagnosticReport;
