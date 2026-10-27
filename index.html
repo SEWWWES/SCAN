@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>SCAN.SeWWWeS.NET | BDR Kamera & Biometrie Scanner v1.0.15 SUPREME</title>
+  <title>SCAN.SeWWWeS.NET | BDR Kamera & Biometrie Scanner v1.0.16 SUPREME</title>
   <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
   <style>
     :root {
@@ -303,8 +303,13 @@
   <!-- 📡 TELEMETRIE & ENGINE HEADER BAR -->
   <div class="spcl-sys-telemetry-box">
     <div class="telemetry-row">
-      <div class="telemetry-title">
-        📷 ©️ ScanMe.NFT | SeWWWeS.NET BDR SOUVERÄNER KAMERA-SCANNER (v1.0.15 SUPREME)
+      <div>
+        <div style="color: var(--sewwwes-gold); font-weight: 950; font-size: 0.88rem; letter-spacing: 0.5px;">
+          🌐🛡️ SeWWWeS.NET 🌎SmartEarthWorld🔍 SPCL CONTROL LABELING | SIGNAL VERIFIED (v1.3.434 SUPREME)
+        </div>
+        <div style="color: #00FF66; font-size: 0.80rem; font-weight: 800; margin-top: 4px;">
+          powered by 🩵 SmartEarthFamily für ein besseres Leben in Frieden und Freiheit
+        </div>
       </div>
       <div id="engine-status-badge" class="engine-badge">
         💻 ENGINE: WIRD ERKANNT...
@@ -506,18 +511,83 @@
       const video = document.getElementById('bdr-video-feed');
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return;
 
-      navigator.mediaDevices.getUserMedia({
-        video: { facingMode: facingMode, width: { ideal: 1280 }, height: { ideal: 720 } }
-      }).then(stream => {
-        videoStream = stream;
-        if (video) {
-          video.srcObject = stream;
-          video.play();
+      // HD Constraints with Continuous Autofocus for Smartphone Back Cameras
+      const constraints = {
+        video: {
+          facingMode: { ideal: facingMode || "environment" },
+          width: { ideal: 1920, min: 1280 },
+          height: { ideal: 1080, min: 720 },
+          advanced: [
+            { focusMode: "continuous" },
+            { zoom: 1.0 }
+          ]
         }
-      }).catch(err => {
+      };
+
+      navigator.mediaDevices.getUserMedia(constraints)
+        .catch(function() {
+          return navigator.mediaDevices.getUserMedia({
+            video: { facingMode: facingMode || "environment", width: { ideal: 1280 }, height: { ideal: 720 } }
+          });
+        })
+        .then(function(stream) {
+          videoStream = stream;
+          if (video) {
+            video.srcObject = stream;
+            video.play().catch(function(){});
+          }
+        })
+        .catch(function(err) {
+          const diag = document.getElementById('sys-diag-line');
+          if (diag) diag.innerText = "⚠️ Hinweis Kamera: " + (err.message || err) + ". Drag & Drop oder Nomo Native Scan nutzen.";
+        });
+    }
+
+    function triggerNomoNativeQrScan() {
+      if (window.nomo && (window.nomo.qrScan || window.nomo.nativeScan)) {
+        var scanFunc = window.nomo.qrScan || window.nomo.nativeScan;
+        scanFunc().then(function(res) {
+          var val = (res && (res.scannedValue || res.value || res)) ? (res.scannedValue || res.value || res) : res;
+          if (val) handleScannedResult(val, "NOMO NATIVE SCAN");
+        }).catch(function(e) {
+          alert("Nomo Scan Notice: " + (e.message || e));
+        });
+      } else {
+        alert("Nomo Native Container nicht erkannt. Bitte Standard Kamera nutzen.");
+      }
+    }
+
+    function startVoiceInput() {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) {
+        alert("⚠️ Spracheingabe wird von diesem Browser nicht unterstützt. Bitte Chrome, Safari oder Edge verwenden.");
+        return;
+      }
+      try {
+        const recognition = new SpeechRecognition();
+        recognition.lang = 'de-DE';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+        
         const diag = document.getElementById('sys-diag-line');
-        if (diag) diag.innerText = `⚠️ Hinweis Kamera: ${err.message || err}. Drag & Drop oder native Nomo App wird empfohlen.`;
-      });
+        if (diag) diag.innerText = "🎙️ Bitte jetzt sprechen... SID, Wallet oder Suchbegriff nennen.";
+
+        recognition.onresult = function(event) {
+          const spokenText = event.results[0][0].transcript;
+          const inp = document.getElementById('manual-code-input');
+          if (inp) inp.value = spokenText;
+          if (diag) diag.innerText = "🎙️ Erkannt: \"" + spokenText + "\"";
+          verifyManualCodeInput();
+        };
+
+        recognition.onerror = function(event) {
+          if (diag) diag.innerText = "⚠️ Spracheingabe Fehler: " + event.error;
+        };
+
+        recognition.start();
+      } catch(e) {
+        alert("Spracheingabe Fehler: " + e.message);
+      }
     }
 
     // LIVE CANVAS QR SCAN LOOP
@@ -605,7 +675,7 @@
 
       if (cleanVal.includes('sewwwes.net') || cleanVal.startsWith('0x') || cleanVal.length === 10) {
         qrBanner.className = "result-banner green";
-        qrBanner.innerHTML = `🟢 <strong>STUFE 1: VERIFIZIERTES SEWWWES SPCL-SIEGEL (${sourceLabel})</strong><br>Inhalt: <strong>${cleanVal}</strong><br><br><button class="btn-action" onclick="window.open('${cleanVal}', '_blank')">🔗 ZIEL ÖFFNEN</button>`;
+        qrBanner.innerHTML = `🟢 <strong>STUFE 1: VERIFIZIERTES SEWWWES SPCL-SIEGEL (${sourceLabel})</strong><br>Inhalt: <strong>${cleanVal}</strong><br><br><button class="btn-action" onclick="window.open('${cleanVal}', '_blank')">🔗 ZIEL ÖFFNEN</button> <button class="btn-action" style="background:#00f2fe; color:#000;" onclick="window.open('https://www.google.com/search?q=' + encodeURIComponent('${cleanVal}'), '_blank')">🌐 GOOGLE INFO-SUCHE</button>`;
       } else {
         qrBanner.className = "result-banner yellow";
         qrBanner.innerHTML = `⚠️ <strong>STUFE 2: EXTERNER / UNVERIFIZIERTER CODE (${sourceLabel})</strong><br>Inhalt: <strong>${cleanVal}</strong><br><br><div style="display:flex; gap:6px; flex-wrap:wrap;"><button class="btn-action" style="flex:1;" onclick="window.open('${cleanVal}', '_blank')">🔗 ZIEL ÖFFNEN</button><button class="btn-action" style="flex:1;" onclick="navigator.clipboard.writeText('${cleanVal}'); alert('📋 Kopiert!');">📋 KOPIEREN</button></div>`;
