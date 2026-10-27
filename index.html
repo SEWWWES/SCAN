@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>SCAN.SeWWWeS.NET | BDR Kamera & Biometrie Scanner v1.0.33 SUPREME</title>
+  <title>SCAN.SeWWWeS.NET | BDR Kamera & Biometrie Scanner v1.0.34 SUPREME SUPREME</title>
   <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
   <style>
     :root {
@@ -340,7 +340,7 @@
     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
       <div style="text-align:left;">
         <div style="color: #D4AF37; font-weight: 950; font-size: 0.90rem; letter-spacing: 0.5px;">
-          🌐🛡️ SeWWWeS.NET 🌎SmartEarthWorld🔍 SPCL CONTROL LABELING | SIGNAL VERIFIED (v1.0.33 SUPREME)
+          🌐🛡️ SeWWWeS.NET 🌎SmartEarthWorld🔍 SPCL CONTROL LABELING | SIGNAL VERIFIED (v1.0.34 SUPREME SUPREME)
         </div>
         <div style="color: #00FF66; font-size: 0.80rem; font-weight: 800; margin-top: 3px;">
           powered by SmartEarthWorld für ein besseres Leben in Frieden und Freiheit
@@ -506,7 +506,15 @@
       <video id="bdr-video-feed" class="bdr-video-element" autoplay playsinline muted></video>
       <canvas id="bdr-hidden-canvas" style="display:none;"></canvas>
       
+      
       <!-- OVERLAYS -->
+      <div id="camera-play-overlay" style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:25; align-items:center; justify-content:center; flex-direction:column; gap:12px; padding:16px; text-align:center;">
+        <button onclick="startCameraStream('environment')" style="background:linear-gradient(135deg, #00FF66, #00B359); color:#000; border:none; padding:12px 24px; border-radius:14px; font-weight:950; font-size:0.88rem; cursor:pointer; box-shadow:0 0 20px rgba(0,255,102,0.6); text-transform:uppercase;">
+          📷 KAMERA-STREAM JETZT MANUELL STARTEN
+        </button>
+        <div style="color:#AAA; font-size:0.75rem;">Klicken Sie hier, falls Ihr Browser die automatische Kamera-Wiedergabe sperrt.</div>
+      </div>
+
       <div id="bdr-laser-line" class="bdr-laser-line"></div>
       
       <div id="bdr-face-overlay" class="bdr-face-overlay">
@@ -553,7 +561,7 @@
     <div style="flex:1; text-align:left; min-width:240px;">
       <div style="color:#D4AF37; font-size:0.75rem; font-weight:950; letter-spacing:0.5px; margin-bottom:3px; display:flex; align-items:center; gap:6px;">
         <span>📡 SYSTEM DIAGNOSTIK & LOG</span>
-        <span style="color:#00FF66; font-size:0.70rem; font-weight:800;">(v1.0.33 SUPREME)</span>
+        <span style="color:#00FF66; font-size:0.70rem; font-weight:800;">(v1.0.34 SUPREME SUPREME)</span>
       </div>
       <div id="sys-diag-line" style="color:#A0AABF; font-size:0.72rem; word-break:break-word; line-height:1.4;">
         [SYSTEM INIT] Engine-Abtastung gestartet... Kamera-Bereitschaft wird hergestellt.
@@ -808,17 +816,22 @@ window.window.detectEngineEnvironment = function() {
       }
       const video = document.getElementById("bdr-video-feed");
       if (!video) return;
+
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-        const diag = document.getElementById("sys-diag-line");
         logDiagnostics("⚠️ Kamera-Zugriff im Browser nicht verfügbar. Drag & Drop oder Nomo Native Scan nutzen.");
+        const btnPlay = document.getElementById("camera-play-overlay");
+        if (btnPlay) btnPlay.style.display = "flex";
         return;
       }
 
-      const mode = facingMode || "environment";
+      const mode = facingMode || window.currentFacingMode || "environment";
+      window.currentFacingMode = mode;
 
-      // Tier 1: HD Ideal (No strict min constraint to prevent OverconstrainedError on webcams)
+      logDiagnostics("⏳ Kamera-Zugriff wird angefordert (" + mode + ")...");
+
+      // Tier 1: HD Ideal
       navigator.mediaDevices.getUserMedia({
-        video: { facingMode: { ideal: mode }, width: { ideal: 1920 }, height: { ideal: 1080 } }
+        video: { facingMode: { ideal: mode }, width: { ideal: 1280 }, height: { ideal: 720 } }
       }).catch(function() {
         // Tier 2: SD Ideal
         return navigator.mediaDevices.getUserMedia({
@@ -833,7 +846,24 @@ window.window.detectEngineEnvironment = function() {
         video.setAttribute("playsinline", "true");
         video.setAttribute("autoplay", "true");
         video.srcObject = stream;
-        video.play().catch(function(){});
+
+        video.onloadedmetadata = function() {
+          video.play().then(function() {
+            logDiagnostics("🟢 Kamera-Videostream gestartet & aktiv (" + mode + ").");
+            const btnPlay = document.getElementById("camera-play-overlay");
+            if (btnPlay) btnPlay.style.display = "none";
+          }).catch(function(pErr) {
+            logDiagnostics("⚠️ Auto-Play unterbunden: " + (pErr.message || pErr) + ". Bitte Kamera-Overlay antippen.");
+            const btnPlay = document.getElementById("camera-play-overlay");
+            if (btnPlay) btnPlay.style.display = "flex";
+          });
+        };
+
+        // Immediate play attempt
+        video.play().then(function() {
+          const btnPlay = document.getElementById("camera-play-overlay");
+          if (btnPlay) btnPlay.style.display = "none";
+        }).catch(function(){});
 
         try {
           const track = stream.getVideoTracks()[0];
@@ -842,13 +872,19 @@ window.window.detectEngineEnvironment = function() {
           }
         } catch(e) {}
 
-        const diag = document.getElementById("sys-diag-line");
-        logDiagnostics("🟢 Kamera-Stream aktiv (" + mode + "). BDR Live-Scan & QR bereit.");
       }).catch(function(err) {
-        const diag = document.getElementById("sys-diag-line");
         logDiagnostics("⚠️ Hinweis Kamera-Berechtigung: " + (err.message || err) + ". Bitte Kamera freigeben oder Nomo Native Scan nutzen.");
+        const btnPlay = document.getElementById("camera-play-overlay");
+        if (btnPlay) btnPlay.style.display = "flex";
       });
     }
+
+    function toggleCameraFacing() {
+      const newMode = (window.currentFacingMode === "user") ? "environment" : "user";
+      logDiagnostics("🔄 Wechsel Kamera-Modus zu: " + newMode);
+      startCameraStream(newMode);
+    }
+
 
     function triggerNomoNativeQrScan() {
       if (window.nomo && (window.nomo.qrScan || window.nomo.nativeScan)) {
@@ -1221,7 +1257,7 @@ window.window.detectEngineEnvironment = function() {
       const userSid = window.userSID || "Nicht gekoppelt";
       const lastLog = window.latestDiagnosticsText || (document.getElementById("sys-diag-line") ? document.getElementById("sys-diag-line").innerText : "");
       
-      const fullReport = "=== SeWWWeS.NET BDR SCANNER DIAGNOSTIK REPORT (v1.0.33 SUPREME) ===\n" +
+      const fullReport = "=== SeWWWeS.NET BDR SCANNER DIAGNOSTIK REPORT (v1.0.34 SUPREME SUPREME) ===\n" +
                          "Datum/Zeit: " + timeStr + "\n" +
                          "WebOn URL: https://scan.sewwwes.net\n" +
                          "Engine Mode: " + engine + "\n" +
@@ -1310,11 +1346,11 @@ window.requestOfficialScanMeSeal = requestOfficialScanMeSeal;
 
 function downloadDiagnosticReport() {
   window.downloadDiagnosticReport = downloadDiagnosticReport;
-  var reportText = 'BDR SCANNER DIAGNOSTIC REPORT (v1.0.33) ' + new Date().toISOString();
+  var reportText = 'BDR SCANNER DIAGNOSTIC REPORT (v1.0.34 SUPREME) ' + new Date().toISOString();
   var blob = new Blob([reportText], { type: 'text/plain' });
   var a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'BDR_Diagnostic_v1.0.33.txt';
+  a.download = 'BDR_Diagnostic_v1.0.34 SUPREME.txt';
   a.click();
 }
 window.downloadDiagnosticReport = downloadDiagnosticReport;

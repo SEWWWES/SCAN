@@ -1,25 +1,14 @@
 {
-  "nomo_manifest_version": "1.0.0",
+  "nomo_manifest_version": "1.1.0",
   "webon_id": "net.sewwwes.scan",
-  "webon_name": "SCAN.SeWWWeS.NET | BDR Kamera & Biometrie Scanner",
-  "webon_version": "1.0.33",
+  "webon_name": "ScanMe.NFT BDR Scanner",
+  "webon_version": "1.0.34",
   "webon_url": "https://scan.sewwwes.net",
-  "webon_icon": "https://scan.sewwwes.net/sewwwes-logo.png",
   "webon_icon_path": "sewwwes-logo.png",
-  "icon": "sewwwes-logo.png",
   "permissions": [
-    "CAMERA",
-    "BIOMETRICS",
-    "QR_SCAN",
-    "NOTIFICATIONS",
-    "STORAGE",
-    "CLIPBOARD",
-    "GEOLOCATION",
-    "AUDIO_RECORDING",
-    "DEVICE_INFO",
-    "NETWORK_INFO",
     "EVM_READ",
     "EVM_SIGN",
-    "EVM_TRANS"
+    "CAMERA",
+    "MICROPHONE"
   ]
 }
