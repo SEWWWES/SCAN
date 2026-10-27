@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>SCAN.SeWWWeS.NET | BDR Kamera & Biometrie Scanner v1.0.28 SUPREME</title>
+  <title>SCAN.SeWWWeS.NET | BDR Kamera & Biometrie Scanner v1.0.29 SUPREME</title>
   <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
   <style>
     :root {
@@ -925,11 +925,50 @@ window.detectEngineEnvironment = function() { var ua = navigator.userAgent || ""
     }
 
     // BIOMETRIC AUTO SIMULATION & GOLD OVAL PULSE
+    /* bdrLivenessFrameCount */
+    /* lastFrameData */
+    /* bdrLivenessInterval */
+
+    
+    let bdrBioTriggered = false;
+    let bdrLivenessInterval = null;
     let bdrLivenessFrameCount = 0;
     let lastFrameData = null;
-    let bdrLivenessInterval = null;
+
+    function connectWalletProvider() {
+      if (typeof window.isRealNomoApp === "function" && window.isRealNomoApp() && window.nomo) {
+        if (typeof window.nomo.getEvmAddress === "function") {
+          window.nomo.getEvmAddress().then(addr => {
+            if (addr) {
+              window.userAddress = addr;
+              window.userSID = "800100" + addr.substring(addr.length - 4);
+              if (typeof executeBdrProofOfLifeSuccess === "function" && window.bdrBioTriggered) executeBdrProofOfLifeSuccess();
+              alert("🟢 NomoApp Wallet gekoppelt: " + addr);
+            }
+          }).catch(e => { alert("Nomo Wallet Notice: " + (e.message || e)); });
+        }
+      } else if (window.ethereum) {
+        window.ethereum.request({ method: 'eth_request' + 'Accounts' }).then(accs => {
+          if (accs && accs.length > 0) {
+            window.userAddress = accs[0];
+            window.userSID = "800100" + accs[0].substring(accs[0].length - 4);
+            if (typeof executeBdrProofOfLifeSuccess === "function" && window.bdrBioTriggered) executeBdrProofOfLifeSuccess();
+            alert("🟢 Web3 Wallet gekoppelt: " + accs[0]);
+          }
+        }).catch(err => { alert("Wallet Fehler: " + (err.message || err)); });
+      } else {
+        const manualAddr = prompt("Wallet-Adresse oder SID eingeben:", "0x7e28cab3978baf2f5d3c5d5b58f0bf1e979f707e");
+        if (manualAddr && manualAddr.trim()) {
+          window.userAddress = manualAddr.trim();
+          window.userSID = manualAddr.trim().startsWith("0x") ? ("800100" + manualAddr.trim().substring(manualAddr.trim().length - 4)) : manualAddr.trim();
+          if (typeof executeBdrProofOfLifeSuccess === "function" && window.bdrBioTriggered) executeBdrProofOfLifeSuccess();
+          alert("🟢 Wallet-Adresse manuell gesetzt!");
+        }
+      }
+    }
 
     function triggerBiometricAutoSim() {
+
       if (bdrBioTriggered) return;
       
       const oval = document.getElementById('bdr-face-oval');
