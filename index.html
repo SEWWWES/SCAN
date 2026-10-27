@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>SCAN.SeWWWeS.NET | BDR Kamera & Biometrie Scanner v1.0.32 SUPREME</title>
+  <title>SCAN.SeWWWeS.NET | BDR Kamera & Biometrie Scanner v1.0.33 SUPREME</title>
   <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
   <style>
     :root {
@@ -312,6 +312,22 @@
     }
 
   </style>
+
+  <script>
+  // Timed Engine Abtastung & Auto-Sync
+  if (typeof detectEngineEnvironment === "function") detectEngineEnvironment();
+  window.addEventListener("DOMContentLoaded", function() {
+    if (typeof detectEngineEnvironment === "function") detectEngineEnvironment();
+    setTimeout(detectEngineEnvironment, 100);
+    setTimeout(detectEngineEnvironment, 500);
+    setTimeout(detectEngineEnvironment, 1500);
+    setTimeout(detectEngineEnvironment, 4000);
+  });
+  window.addEventListener("load", function() {
+    if (typeof detectEngineEnvironment === "function") detectEngineEnvironment();
+  });
+  </script>
+
 </head>
 <body>
 
@@ -324,10 +340,10 @@
     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
       <div style="text-align:left;">
         <div style="color: #D4AF37; font-weight: 950; font-size: 0.90rem; letter-spacing: 0.5px;">
-          🌐🛡️ SeWWWeS.NET 🌎SmartEarthWorld🔍 SPCL CONTROL LABELING | SIGNAL VERIFIED (v1.0.32 SUPREME)
+          🌐🛡️ SeWWWeS.NET 🌎SmartEarthWorld🔍 SPCL CONTROL LABELING | SIGNAL VERIFIED (v1.0.33 SUPREME)
         </div>
         <div style="color: #00FF66; font-size: 0.80rem; font-weight: 800; margin-top: 3px;">
-          powered by 🩵 SmartEarthFamily für ein besseres Leben in Frieden und Freiheit
+          powered by SmartEarthWorld für ein besseres Leben in Frieden und Freiheit
         </div>
       </div>
       <div style="display:flex; align-items:center; gap:8px;">
@@ -359,7 +375,7 @@
           👤 1. MENTOR DIRK & NOMOAPP
         </div>
         <div style="color:#DDD; font-size:0.78rem; line-height:1.4; margin-bottom:12px; min-height:48px;">
-          <strong>SeWWWeS SmartEarthFamily Dirk lädt Sie ein!</strong><br>
+          <strong>SeWWWeS SmartEarthWorld Dirk lädt Sie ein!</strong><br>
           <span style="color:#aaa;">1. Scan / Klick: NomoApp Download & Landingpage<br>2. Scan in NomoApp: Direkter P2P Messenger Chat</span>
         </div>
       </div>
@@ -537,7 +553,7 @@
     <div style="flex:1; text-align:left; min-width:240px;">
       <div style="color:#D4AF37; font-size:0.75rem; font-weight:950; letter-spacing:0.5px; margin-bottom:3px; display:flex; align-items:center; gap:6px;">
         <span>📡 SYSTEM DIAGNOSTIK & LOG</span>
-        <span style="color:#00FF66; font-size:0.70rem; font-weight:800;">(v1.0.32 SUPREME)</span>
+        <span style="color:#00FF66; font-size:0.70rem; font-weight:800;">(v1.0.33 SUPREME)</span>
       </div>
       <div id="sys-diag-line" style="color:#A0AABF; font-size:0.72rem; word-break:break-word; line-height:1.4;">
         [SYSTEM INIT] Engine-Abtastung gestartet... Kamera-Bereitschaft wird hergestellt.
@@ -549,7 +565,7 @@
   </div>
 
   <div class="footer-copy">
-    ⚡ Zero-Server • On-Device 128-D Match & SPCL Live-Scan | SmartEarthWorld & SmartEarthFamily
+    ⚡ Zero-Server • On-Device 128-D Match & SPCL Live-Scan | SmartEarthWorld & SmartEarthWorld
   </div>
 
   <!-- SCRIPT BLOCK -->
@@ -613,6 +629,7 @@
     }
 
     function expandNomoRevealMatrix() {
+    if (typeof detectEngineEnvironment === "function") detectEngineEnvironment();
       userInteractedReveal = true;
       if (revealTimerSoft) clearTimeout(revealTimerSoft);
       if (revealTimerShrink) clearTimeout(revealTimerShrink);
@@ -641,6 +658,7 @@
   }
 
   function expandNomoRevealMatrix() {
+    if (typeof detectEngineEnvironment === "function") detectEngineEnvironment();
     userInteractedReveal = true;
     if (revealTimerSoft) clearTimeout(revealTimerSoft);
     if (revealTimerShrink) clearTimeout(revealTimerShrink);
@@ -711,26 +729,36 @@ window.window.detectEngineEnvironment = function() {
       else if (isMobile) { window.currentEngineMode = "MobileBrowser"; }
       else { window.currentEngineMode = "PCDesktop"; }
       
+      var activeWallet = (typeof userAddress !== "undefined" && userAddress) ? userAddress : ((typeof window !== "undefined" && window.currentActiveWalletAddress) ? window.currentActiveWalletAddress : "");
+      var shortAddr = activeWallet ? (" (" + activeWallet.substring(0,6) + "..." + activeWallet.substring(activeWallet.length-4) + ")") : "";
+
       var badges = [document.getElementById("sewwwes-engine-badge"), document.getElementById("engine-status-badge")];
-      badges.forEach(function(b) {
+      var badgeEls = document.querySelectorAll(".engine-badge");
+      var allBadges = Array.from(badges).concat(Array.from(badgeEls));
+      
+      allBadges.forEach(function(b) {
         if (!b) return;
         if (window.currentEngineMode === "PCDesktop") {
-          b.innerHTML = "💻 ENGINE: PC DESKTOP WEB3 (METAMASK / BRAVE / TRUST)";
+          b.innerHTML = "💻 ENGINE: PC DESKTOP WEB3 (METAMASK / BRAVE / TRUST)" + shortAddr;
           b.style.background = "rgba(0, 242, 254, 0.18)";
           b.style.color = "#00f2fe";
           b.style.border = "1px solid #00f2fe";
         } else if (window.currentEngineMode === "NomoApp") {
-          b.innerHTML = "📱 ENGINE: NOMOAPP NATIVE CONTAINER";
+          b.innerHTML = "📱 ENGINE: NOMOAPP NATIVE CONTAINER" + shortAddr;
           b.style.background = "rgba(255, 215, 0, 0.18)";
           b.style.color = "#FFD700";
           b.style.border = "1px solid #FFD700";
         } else {
-          b.innerHTML = "📱 ENGINE: MOBILE BROWSER (SMARTPHONE / TABLET)";
+          b.innerHTML = "📱 ENGINE: MOBILE BROWSER (SMARTPHONE / TABLET)" + shortAddr;
           b.style.background = "rgba(0, 255, 102, 0.18)";
           b.style.color = "#00FF66";
           b.style.border = "1px solid #00FF66";
         }
       });
+
+      if (typeof logDiagnostics === "function") {
+        logDiagnostics("📡 Engine erkannt: " + window.currentEngineMode + (activeWallet ? " | Wallet gekoppelt: " + activeWallet : " | Standalone Modus"));
+      }
     };
 
     // GATEWAY LINK BRÜCKE
@@ -1123,7 +1151,7 @@ window.window.detectEngineEnvironment = function() {
               <span>🌿 On-Chain Status: <strong style="color:#FFD700;">GEKOPPELT</strong></span>
             </div>
             <div style="font-size:0.70rem; color:#00FF66; font-weight:bold; margin-top:8px; border-top:1px solid rgba(0,255,102,0.2); padding-top:4px;">
-              ⚡ Zero-Server • On-Device 128-D Match & SPCL Live-Scan | SmartEarthWorld & SmartEarthFamily
+              ⚡ Zero-Server • On-Device 128-D Match & SPCL Live-Scan | SmartEarthWorld & SmartEarthWorld
             </div>
           `;
         } else {
@@ -1140,7 +1168,7 @@ window.window.detectEngineEnvironment = function() {
               <button onclick="expandNomoRevealMatrix()" style="background:linear-gradient(135deg, #FFD700, #D4AF37); color:#000; border:none; padding:4px 10px; border-radius:6px; font-weight:900; font-size:0.72rem; cursor:pointer;">🔑 WALLET / NOMO.ID KOPPELN</button>
             </div>
             <div style="font-size:0.70rem; color:#00FF66; font-weight:bold; margin-top:8px; border-top:1px solid rgba(0,255,102,0.2); padding-top:4px;">
-              ⚡ Zero-Server • On-Device 128-D Match & SPCL Live-Scan | SmartEarthWorld & SmartEarthFamily
+              ⚡ Zero-Server • On-Device 128-D Match & SPCL Live-Scan | SmartEarthWorld & SmartEarthWorld
             </div>
           `;
         }
@@ -1193,7 +1221,7 @@ window.window.detectEngineEnvironment = function() {
       const userSid = window.userSID || "Nicht gekoppelt";
       const lastLog = window.latestDiagnosticsText || (document.getElementById("sys-diag-line") ? document.getElementById("sys-diag-line").innerText : "");
       
-      const fullReport = "=== SeWWWeS.NET BDR SCANNER DIAGNOSTIK REPORT (v1.0.32 SUPREME) ===\n" +
+      const fullReport = "=== SeWWWeS.NET BDR SCANNER DIAGNOSTIK REPORT (v1.0.33 SUPREME) ===\n" +
                          "Datum/Zeit: " + timeStr + "\n" +
                          "WebOn URL: https://scan.sewwwes.net\n" +
                          "Engine Mode: " + engine + "\n" +
@@ -1282,11 +1310,11 @@ window.requestOfficialScanMeSeal = requestOfficialScanMeSeal;
 
 function downloadDiagnosticReport() {
   window.downloadDiagnosticReport = downloadDiagnosticReport;
-  var reportText = 'BDR SCANNER DIAGNOSTIC REPORT (v1.0.32) ' + new Date().toISOString();
+  var reportText = 'BDR SCANNER DIAGNOSTIC REPORT (v1.0.33) ' + new Date().toISOString();
   var blob = new Blob([reportText], { type: 'text/plain' });
   var a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'BDR_Diagnostic_v1.0.32.txt';
+  a.download = 'BDR_Diagnostic_v1.0.33.txt';
   a.click();
 }
 window.downloadDiagnosticReport = downloadDiagnosticReport;
@@ -1321,7 +1349,7 @@ window.startSpeechInput = startSpeechInput;
         <span>☸️ DHARMA MANDALA WUNDER - NAVIGATIONS COCKPIT</span>
       </div>
       <div style="color:#00FF66; font-size:0.85rem; font-weight:800; margin-top:4px;">
-        powered by 🩵 SmartEarthFamily für ein besseres Leben in Frieden und Freiheit
+        powered by SmartEarthWorld für ein besseres Leben in Frieden und Freiheit
       </div>
     </div>
 
