@@ -1,12 +1,8 @@
 {
   "nomo_manifest_version": "1.2.0",
   "webon_id": "net.sewwwes.scan",
-  "webon_name": "SCAN.SeWWWeS.NET | BDR Kamera & Biometrie Scanner",
-  "webon_version": "1.0.49",
-  "webon_description": "Souver\u00e4ner BDR Kamera & Biometrie Scanner, 128-D Vektor Proof-of-Life & QR Finder",
-  "webon_url": "https://scan.sewwwes.net",
-  "webon_icon": "https://scan.sewwwes.net/sewwwes-logo.png",
-  "min_nomo_version": "0.9.0",
+  "webon_name": "SCAN.SeWWWeS.NET",
+  "webon_version": "1.0.69",
   "permissions": [
     "CAMERA",
     "BIOMETRICS",
